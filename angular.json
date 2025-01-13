@@ -28,6 +28,9 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
+              "tailwindcss/base.css",
+              "tailwindcss/components.css", 
+              "tailwindcss/utilities.css",
               "src/styles.css"
             ],
             "scripts": []
