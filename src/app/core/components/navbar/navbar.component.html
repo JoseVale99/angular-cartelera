@@ -1,1 +1,27 @@
-<p>navbar works!</p>
+<header class="navbar__container" [class.colored__scrolled]="isScrolled">
+
+    <nav class="navbar__nav container">
+      <a [routerLink]="'/'" class="flex-start navbar__logo">
+        <img [ngSrc]="'assets/img/logo.webp'" alt="Movies + TV Shows by JancoBH" width="144" height="36" [priority]="true">
+      </a>
+      <div class="navbar__list">
+        <a mat-button [routerLink]="''" [routerLinkActive]="['activated-route']" [routerLinkActiveOptions]="{exact: true}" aria-label="Inicio"><mat-icon>home</mat-icon></a>
+        <a mat-button [routerLink]="'movies'" [routerLinkActive]="['activated-route']" aria-label="Peliculas">Películas</a>
+        <a mat-button [routerLink]="'tv-shows'" [routerLinkActive]="['activated-route']" aria-label="Series">Series</a>
+  
+        <button mat-icon-button [matMenuTriggerFor]="menu" title="Change Color" aria-label="Change Color">
+          <mat-icon>format_color_fill</mat-icon>
+        </button>
+  
+        <mat-menu #menu="matMenu">
+          <div *ngFor="let theme of themeColorList" [class.hidden]="themeColorInit === theme.color" [attr.aria-label]="'Color ' + theme.name">
+            <button mat-menu-item (click)="setColorTheme(theme.color)">
+              <mat-icon [style.color]="theme.color" aria-hidden="false" aria-label="Color Selector Icon" fontIcon="lens"></mat-icon>
+              <span>{{theme.name}}</span>
+            </button>
+          </div>
+        </mat-menu>
+      </div>
+    </nav>
+  
+  </header>  
