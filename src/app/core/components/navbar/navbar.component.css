@@ -1,0 +1,16 @@
+
+::ng-deep .mdc-button__label {
+    color: white;
+  }
+  mat-icon {
+    color: #fff;
+  }
+  
+  .activated-route {
+    border-bottom: 2px solid;
+    border-radius: 0;
+  }
+  
+  .activated-route:last-child {
+    margin-right: 15px;
+  }
