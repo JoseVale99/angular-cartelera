@@ -8,7 +8,7 @@
       </div>
     </a>
 
-    <div class="flex items-center space-x-8">
+    <div class="items-center space-x-8 hidden md:flex">
       <a mat-button [routerLink]="'/'" [routerLinkActive]="['activated-route']" [routerLinkActiveOptions]="{exact: true}" aria-label="Inicio">Inicio </a>
       <a mat-button [routerLink]="'/peliculas'" [routerLinkActive]="['activated-route']" aria-label="Películas">Películas</a>
       <a mat-button [routerLink]="'/series'" [routerLinkActive]="['activated-route']" aria-label="Series">Series</a>
@@ -24,6 +24,15 @@
           </button>
         </div>
       </mat-menu>
+    </div>
+
+    <button class="md:hidden text-white" (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div *ngIf="isMenuOpen" class="absolute top-16 left-0 w-full bg-gray-900 md:hidden">
+      <a mat-button [routerLink]="'/'" [routerLinkActive]="['activated-route']" [routerLinkActiveOptions]="{exact: true}" aria-label="Inicio" class="block w-full text-left">Inicio </a>
+      <a mat-button [routerLink]="'/peliculas'" [routerLinkActive]="['activated-route']" aria-label="Películas" class="block w-full text-left">Películas</a>
+      <a mat-button [routerLink]="'/series'" [routerLinkActive]="['activated-route']" aria-label="Series" class="block w-full text-left">Series</a>
     </div>
   </nav>
 </header>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgForOf, NgOptimizedImage } from '@angular/common';
+import { CommonModule, NgForOf, NgOptimizedImage } from '@angular/common';
 import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { themeColors } from '../../constants/theme-colors';
 import { Color } from '../../enums/colors.enum';
@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatMenuModule,
     RouterLinkActive,
     NgOptimizedImage,
+    CommonModule,
     NgForOf,
     MatIconModule,
     MatAnchor,
@@ -25,6 +26,8 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class NavbarComponent {
   @Output() changeColorTheme: EventEmitter<string> = new EventEmitter();
+
+  isMenuOpen = false;
 
   themeColorList = themeColors;
   themeColorInit: string = Color.RED;
@@ -41,4 +44,7 @@ export class NavbarComponent {
     this.changeColorTheme.emit(color);
   }
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }
