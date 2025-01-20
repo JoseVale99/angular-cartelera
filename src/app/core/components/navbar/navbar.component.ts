@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CommonModule, NgForOf, NgOptimizedImage } from '@angular/common';
+import { CommonModule, NgForOf } from '@angular/common';
 import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { themeColors } from '../../constants/theme-colors';
 import { Color } from '../../enums/colors.enum';
@@ -13,7 +13,6 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     MatMenuModule,
     RouterLinkActive,
-    NgOptimizedImage,
     CommonModule,
     NgForOf,
     MatIconModule,

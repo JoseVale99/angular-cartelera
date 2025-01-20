@@ -1,11 +1,10 @@
-import { NgForOf, NgOptimizedImage } from '@angular/common';
+import { NgForOf } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
   imports: [
-    NgForOf,
-    NgOptimizedImage
+    NgForOf
   ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css'
