@@ -51,6 +51,7 @@ export class HomeComponent{
     try {
       const { data } = await this.moviesService.getSliderMovies('movies', 0) as { data: MovieSliderModel[] };
       this.moviesList = data;
+      console.log(this.moviesList);
     } catch (error) {
       console.error(error);
     }
