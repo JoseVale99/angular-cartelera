@@ -14,7 +14,7 @@ export class MoviesService {
   * Get slider movies
   */
   getSliderMovies(type: string, listen: number) {
-    const $response = this.http.get(this.baseUrl + `slider?type=${type}&listen=${listen}`);
+    const $response = this.http.get(this.baseUrl + `sliders?type=${type}&listen=${listen}`);
     return lastValueFrom($response);
   }
 }
