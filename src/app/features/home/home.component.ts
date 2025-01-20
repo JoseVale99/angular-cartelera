@@ -1,66 +1,58 @@
-import { SlicePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, SlicePipe } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
-import { RouterLink } from '@angular/router';
+import { MoviesService } from '../content/services/movies.service';
+import { SwiperDirective } from '../../shared/directives/swiper.directive';
+import { SwiperOptions } from 'swiper/types';
+import { MovieSliderModel } from '../content/interfaces/movie-slider';
+import { PosterCardComponent } from "../../shared/components/poster-card/poster-card.component";
 
 @Component({
   selector: 'app-home',
   imports: [
-    //MovieCardComponent,
-    RouterLink,
-    //SwiperDirective,
+    CommonModule,
+    SwiperDirective,
     SlicePipe,
     MatTabGroup,
     MatTab,
-    MatIcon
-  ],
+    MatIcon,
+    PosterCardComponent
+],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomeComponent {
-  movies = [
-    {
-      title: 'Transformers Uno (2024)',
-      year: 2024,
-      rating: 8.2,
-      genres: ['Familia', 'Animación', 'Aventura'],
-      image: 'path/to/transformers.jpg',
-    },
-    {
-      title: 'La sustancia (2024)',
-      year: 2024,
-      rating: 7.3,
-      genres: ['Drama', 'Terror', 'Ciencia ficción'],
-      image: 'path/to/la-sustancia.jpg',
-    },
-    {
-      title: 'Guasón 2: Folie à Deux (2024)',
-      year: 2024,
-      rating: 5.7,
-      genres: ['Crimen', 'Drama', 'Suspense'],
-      image: 'path/to/guason.jpg',
-    },
-    {
-      title: 'Hellboy: The Crooked Man (2024)',
-      year: 2024,
-      rating: 5.0,
-      genres: ['Fantasía', 'Acción', 'Terror'],
-      image: 'path/to/hellboy.jpg',
-    },
-    {
-      title: 'Robot salvaje (2024)',
-      year: 2024,
-      rating: 8.2,
-      genres: ['Familia', 'Animación', 'Ciencia ficción'],
-      image: 'path/to/robot.jpg',
-    },
-    {
-      title: 'Alien: Romulus (2024)',
-      year: 2024,
-      rating: 7.0,
-      genres: ['Acción', 'Terror', 'Ciencia ficción'],
-      image: 'path/to/alien.jpg',
-    },
-  ];
+export class HomeComponent{
+
+  config: SwiperOptions = {
+    watchSlidesProgress: true,
+    breakpoints: {
+      992: {slidesPerView: 5, spaceBetween: 30, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      768: {slidesPerView: 4, spaceBetween: 30, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      576: {slidesPerView: 3, spaceBetween: 30, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      320: {slidesPerView: 2, spaceBetween: 30, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+    }
+  };
+
+  private moviesService = inject(MoviesService);
+  movieTabList = ['Now playing', 'Upcoming', 'Popular'];
+  moviesList: Array<MovieSliderModel> = [];
+  selectedMovieTab = 0;
+
+  ngAfterViewInit(): void {
+
+    setTimeout(() => {
+      this.getSliderMovies();
+    }, 0);
+  }
+
+  private async getSliderMovies() {
+    try {
+      const { data } = await this.moviesService.getSliderMovies('movies', 0) as { data: MovieSliderModel[] };
+      this.moviesList = data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
