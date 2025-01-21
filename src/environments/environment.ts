@@ -1,4 +1,1 @@
-export const environment = {
-    production: true,
-    BASE_URL: ''
-};
+export const environment = {};
