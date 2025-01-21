@@ -7,7 +7,6 @@ import { SwiperDirective } from '../../shared/directives/swiper.directive';
 import { SwiperOptions } from 'swiper/types';
 import { MovieSliderModel } from '../content/interfaces/movie-slider';
 import { PosterCardComponent } from "../../shared/components/poster-card/poster-card.component";
-import { environment } from '../../../environments/environment.development';
 @Component({
   selector: 'app-home',
   imports: [
