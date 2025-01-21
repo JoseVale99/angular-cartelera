@@ -1,4 +1,1 @@
-export const environment = {
-    production: 'true',
-    urlBase: '',
-};
+export const environment = {};
