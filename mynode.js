@@ -5,13 +5,7 @@ const checkSign = '\u{2705}';
 const dotenv = require('dotenv').config({path: 'src/.env'});
 
 const envFile = `export const environment = {
-    production: '${process.env.production}',
-    urlBase: '${process.env.urlBase}',
-};
-`;
-
-const envProdFile = `export const environment = {
-    production: true,
+    production: ${process.env.production === 'true'},
     urlBase: '${process.env.urlBase}',
 };
 `;
@@ -29,12 +23,14 @@ fs.writeFile(targetDevPath, envFile, (err) => {
     }
 });
 
-// Generar archivo de producción
-fs.writeFile(targetProdPath, envProdFile, (err) => {
-    if (err) {
-        console.error(err); 
-        throw err;
-    } else {
-        console.log(successColor, `${checkSign} Archivo environment.ts generado exitosamente`);
-    }
-});
+// Generar archivo de producción si production es true
+if (process.env.production === 'true') {
+    fs.writeFile(targetProdPath, envFile, (err) => {
+        if (err) {
+            console.error(err); 
+            throw err;
+        } else {
+            console.log(successColor, `${checkSign} Archivo environment.ts generado exitosamente`);
+        }
+    });
+}
