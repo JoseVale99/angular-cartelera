@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
   providedIn: 'root'
 })
 export class MoviesService {
-  private readonly baseUrl = environment.BASE_URL + 'api/rest/';
+  private readonly baseUrl = environment.urlBase + 'api/rest/';
   private http = inject(HttpClient);
 
   /*

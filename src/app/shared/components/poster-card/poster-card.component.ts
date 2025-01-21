@@ -19,7 +19,7 @@ export class PosterCardComponent {
   @Input() model!: any;
   @Input() isMovie!: boolean;
   posterUrl!: string;
-  private readonly baseUrl = environment.BASE_URL + 'wp-content/uploads';
+  private readonly baseUrl = environment.urlBase + 'wp-content/uploads';
 
   imageBaseUrl(uuid: string): string {
     return this.baseUrl + uuid;

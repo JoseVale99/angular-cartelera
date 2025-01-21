@@ -48,7 +48,7 @@ export class HomeComponent{
   }
 
   private async getSliderMovies() {
-    console.log('getSliderMovies', environment.BASE_URL);
+    console.log('getSliderMovies', environment.urlBase);
     try {
       const { data } = await this.moviesService.getSliderMovies('movies', 0) as { data: MovieSliderModel[] };
       this.moviesList = data;
