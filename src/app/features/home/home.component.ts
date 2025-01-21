@@ -7,7 +7,7 @@ import { SwiperDirective } from '../../shared/directives/swiper.directive';
 import { SwiperOptions } from 'swiper/types';
 import { MovieSliderModel } from '../content/interfaces/movie-slider';
 import { PosterCardComponent } from "../../shared/components/poster-card/poster-card.component";
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.development';
 @Component({
   selector: 'app-home',
   imports: [
@@ -48,7 +48,7 @@ export class HomeComponent{
   }
 
   private async getSliderMovies() {
-    console.log('getSliderMovies', environment.production);
+    console.log('getSliderMovies', environment.urlBase);
     try {
       const { data } = await this.moviesService.getSliderMovies('movies', 0) as { data: MovieSliderModel[] };
       this.moviesList = data;
