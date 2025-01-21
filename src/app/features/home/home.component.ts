@@ -36,7 +36,7 @@ export class HomeComponent{
   };
 
   private moviesService = inject(MoviesService);
-  movieTabList = ['Now playing', 'Upcoming', 'Popular'];
+  movieTabList = ['En cartelera', 'Próximamente', 'Populares'];
   moviesList: Array<MovieSliderModel> = [];
   selectedMovieTab = 0;
 
