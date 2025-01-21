@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ImgMissingDirective } from '../../directives/img-missing.directive';
 import { DatePipe, NgIf } from '@angular/common';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-poster-card',
