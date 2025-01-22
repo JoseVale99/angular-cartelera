@@ -42,10 +42,10 @@ export class HomeComponent{
       disableOnInteraction: false,
     },
     breakpoints: {
-      992: {slidesPerView: 5, spaceBetween: 20, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
-      768: {slidesPerView: 3, spaceBetween: 15, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
-      576: {slidesPerView: 3, spaceBetween: 15, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
-      320: {slidesPerView: 1, spaceBetween: 10, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      992: {slidesPerView: 5, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      768: {slidesPerView: 4, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
+      576: {slidesPerView: 3, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      320: {slidesPerView: 2, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
     },
     on: {
       init: () => {
