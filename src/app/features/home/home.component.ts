@@ -29,7 +29,7 @@ export class HomeComponent{
     grabCursor: true,
     effect: 'coverflow', 
     centeredSlides: true,
-    initialSlide: 2,
+    initialSlide: 5,
     coverflowEffect: {
       rotate: 20,
       stretch: 0,
@@ -38,7 +38,7 @@ export class HomeComponent{
       slideShadows: false,
     },
     autoplay: {
-      delay: 3000,
+      delay: 1000,
       disableOnInteraction: false,
     },
     breakpoints: {
