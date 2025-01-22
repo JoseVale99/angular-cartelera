@@ -26,32 +26,63 @@ export class HomeComponent{
 
   config: SwiperOptions = {
     watchSlidesProgress: true,
+    grabCursor: true,
+    effect: 'coverflow', 
+    centeredSlides: true,
+    initialSlide: 2,
+    coverflowEffect: {
+      rotate: 20,
+      stretch: 0,
+      depth: 50,
+      modifier: 1,
+      slideShadows: false,
+    },
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
     breakpoints: {
-      992: {slidesPerView: 5, spaceBetween: 30, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
-      768: {slidesPerView: 4, spaceBetween: 30, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
-      576: {slidesPerView: 3, spaceBetween: 30, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
-      320: {slidesPerView: 2, spaceBetween: 30, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      992: {slidesPerView: 5, spaceBetween: 20, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      768: {slidesPerView: 3, spaceBetween: 15, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      576: {slidesPerView: 3, spaceBetween: 15, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
+      320: {slidesPerView: 1, spaceBetween: 10, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+    },
+    on: {
+      init: () => {
+        const swiperEl = document.querySelector('swiper-container');
+        if (swiperEl) {
+          swiperEl.classList.add('fade-in');
+        }
+      }
     }
   };
 
   private moviesService = inject(MoviesService);
-  movieTabList = ['En cartelera', 'Próximamente', 'Populares'];
+  movieTabList = ['Películas de estreno', 'Películas recién actualizadas'];
   moviesList: Array<MovieSliderModel> = [];
   selectedMovieTab = 0;
 
   ngAfterViewInit(): void {
-
     setTimeout(() => {
-      this.getSliderMovies();
+      this.getSliderMovies('0');
     }, 0);
   }
 
-  private async getSliderMovies() {
+  private async getSliderMovies(type: string) {
     try {
-      const { data } = await this.moviesService.getSliderMovies('movies', 0) as { data: MovieSliderModel[] };
+      const { data } = await this.moviesService.getSliderMovies('movies', type) as { data: MovieSliderModel[] };
       this.moviesList = data;
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  tabMovieChange({ index }: { index: number; }) {
+    this.selectedMovieTab = index;
+    const movieTypes = ['0', 'true'];
+    const selectedType = movieTypes[index];
+    if (selectedType) {
+      this.getSliderMovies(selectedType);
     }
   }
 }
