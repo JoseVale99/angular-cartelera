@@ -1,5 +1,5 @@
 <section
-  class="home-main-content flex justify-center items-center h-[500px] bg-cover bg-center text-white text-5xl font-bold shadow-lg"
+  class="home-main-content flex justify-center items-center h-[459px] bg-cover bg-center text-white text-5xl font-bold shadow-lg"
   style="
     background: linear-gradient(135deg, rgba(34, 34, 34, 0.85), rgba(26, 33, 74, 0.85)), url('../assets/img/background-main.webp') no-repeat center center / cover;
   ">
@@ -17,13 +17,19 @@
       Películas
     </h2>
     
-    <mat-tab-group>
+    <mat-tab-group (selectedTabChange)="tabMovieChange($event)" [selectedIndex]="selectedMovieTab" mat-align-tabs="end">
       <mat-tab *ngFor="let tab of movieTabList" [label]="tab">
-        <swiper-container appSwiper [config]="config" pagination="true" scrollbar="false">
-          <swiper-slide *ngFor="let movie of moviesList | slice: 0: 15">
-            <app-poster-card [model]="movie" [isMovie]="true"></app-poster-card>
-          </swiper-slide>
-        </swiper-container>
+        <div [@fadeAnimation]>
+          <swiper-container appSwiper [config]="config" pagination="true" scrollbar="false">
+            @if (moviesList.length > 0) {
+              <swiper-slide *ngFor="let movie of moviesList | slice: 0: 15" [@slideAnimation]>
+                <app-poster-card [model]="movie" [isMovie]="true"></app-poster-card>
+              </swiper-slide>
+            } @else {
+              <div class="text-white text-center py-4" [@fadeAnimation]>No hay películas disponibles</div>
+            }
+          </swiper-container>
+        </div>
       </mat-tab>
     </mat-tab-group>
   </section>
@@ -32,7 +38,7 @@
   <section class="my-16 mb-20">
     <h2 class="text-2xl font-bold mb-4 flex items-center text-white">
       <mat-icon class="mr-2">tv_gen</mat-icon>
-      Series v2
+      Series
     </h2>
     <!-- <mat-tab-group (selectedTabChange)="tabTVChange($event)" [selectedIndex]="selectedTVTab">
       <mat-tab *ngFor="let tab of tvShowsTabList" [label]="tab">
