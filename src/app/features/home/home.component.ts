@@ -31,14 +31,14 @@ export class HomeComponent{
     centeredSlides: true,
     initialSlide: 5,
     coverflowEffect: {
-      rotate: 20,
+      rotate: 25,
       stretch: 0,
       depth: 50,
       modifier: 1,
       slideShadows: false,
     },
     autoplay: {
-      delay: 1000,
+      delay: 2000,
       disableOnInteraction: false,
     },
     breakpoints: {
@@ -46,14 +46,6 @@ export class HomeComponent{
       768: {slidesPerView: 4, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
       576: {slidesPerView: 3, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
       320: {slidesPerView: 2, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
-    },
-    on: {
-      init: () => {
-        const swiperEl = document.querySelector('swiper-container');
-        if (swiperEl) {
-          swiperEl.classList.add('fade-in');
-        }
-      }
     }
   };
 
