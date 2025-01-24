@@ -40,9 +40,10 @@ export class HomeComponent{
       slideShadows: false,
     },
     breakpoints: {
-      992: {slidesPerView: 7, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
-      768: {slidesPerView: 5, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
-      576: {slidesPerView: 5, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      1440: {slidesPerView:9, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      992: {slidesPerView: 6, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      768: {slidesPerView: 4, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
+      576: {slidesPerView: 2, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
       320: {slidesPerView: 2, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
     }
   };
