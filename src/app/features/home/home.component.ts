@@ -33,16 +33,16 @@ export class HomeComponent{
     centeredSlides: true,
     initialSlide: 5,
     coverflowEffect: {
-      rotate: 25,
+      rotate: 20,
       stretch: 0,
-      depth: 50,
+      depth: 20,
       modifier: 1,
       slideShadows: false,
     },
     breakpoints: {
-      992: {slidesPerView: 5, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
-      768: {slidesPerView: 4, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
-      576: {slidesPerView: 3, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      992: {slidesPerView: 7, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      768: {slidesPerView: 5, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
+      576: {slidesPerView: 5, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
       320: {slidesPerView: 2, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
     }
   };
