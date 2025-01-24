@@ -8,7 +8,7 @@
 
         <text x="23" y="29" text-anchor="middle" font-size="13.5" fill="currentColor" 
         [ngClass]="getColorRating" font-weight="bold">
-        {{ rating }}
+        {{ rating || 0.0 | number:'1.1-1' }}
         </text>
     </svg>
 </div>
