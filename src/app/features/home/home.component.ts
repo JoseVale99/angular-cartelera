@@ -39,10 +39,6 @@ export class HomeComponent{
       modifier: 1,
       slideShadows: false,
     },
-    autoplay: {
-      delay: 2000,
-      disableOnInteraction: false,
-    },
     breakpoints: {
       992: {slidesPerView: 5, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
       768: {slidesPerView: 4, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
