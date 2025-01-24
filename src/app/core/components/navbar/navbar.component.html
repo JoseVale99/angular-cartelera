@@ -1,4 +1,4 @@
-<header class="fixed top-0 left-0 w-full z-50 bg-gray-900 shadow-md">
+<header class="fixed top-0 left-0 w-full z-50 shadow-md" [ngClass]="{'bg-gray-900': isScrolled, 'bg-transparent': !isScrolled}">
   <nav class="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
     <a [routerLink]="'/'" class="flex items-center space-x-4">
       <img [src]="'assets/img/logo.png'" alt="Series & Películas" class="h-16 w-auto" width="144" height="36"/>
