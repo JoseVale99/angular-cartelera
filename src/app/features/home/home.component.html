@@ -44,14 +44,24 @@
       <mat-icon class="mr-2">tv_gen</mat-icon>
       Series
     </h2>
-    <!-- <mat-tab-group (selectedTabChange)="tabTVChange($event)" [selectedIndex]="selectedTVTab">
+    <mat-tab-group (selectedTabChange)="tabTVChange($event)" [selectedIndex]="selectedTVTab">
       <mat-tab *ngFor="let tab of tvShowsTabList" [label]="tab">
-        <swiper-container appSwiper [config]="config" pagination="true" scrollbar="false">
-          <swiper-slide *ngFor="let tvShow of tvShowsList | slice: 0: 15">
-            <app-poster-card [model]="tvShow"></app-poster-card>
-          </swiper-slide>
-        </swiper-container>
+        <div [@fadeAnimation]>
+          <swiper-container appSwiper [config]="config" pagination="true" scrollbar="false">
+            @if (tvShowsList.length > 0) {
+              <swiper-slide *ngFor="let tvShow of tvShowsList | slice: 0: 15" [@slideAnimation]>
+                <app-poster-card [model]="tvShow" [isMovie]="false"></app-poster-card>
+              </swiper-slide>
+            } @else {
+              <div class="flex justify-center items-center h-40">
+                <p class="text-white text-lg text-center p-4 bg-gray-800 bg-opacity-75" [@fadeAnimation]>
+                  No hay series disponibles
+                </p>
+              </div>
+            }
+          </swiper-container>
+        </div>
       </mat-tab>
-    </mat-tab-group> -->
+    </mat-tab-group>
   </section>
 </div>

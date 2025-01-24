@@ -7,6 +7,8 @@ import { SwiperDirective } from '../../shared/directives/swiper.directive';
 import { SwiperOptions } from 'swiper/types';
 import { MovieSliderModel } from '../content/interfaces/movie-slider';
 import { PosterCardComponent } from "../../shared/components/poster-card/poster-card.component";
+import { TvShowSliderModel } from '../content/interfaces/tv-show-slider.interface';
+import { TvShowsService } from '../content/services/tv-shows.service';
 @Component({
   selector: 'app-home',
   imports: [
@@ -50,13 +52,18 @@ export class HomeComponent{
   };
 
   private moviesService = inject(MoviesService);
-  movieTabList = ['Películas de estreno', 'Películas recién actualizadas'];
+  private tvShowsService = inject(TvShowsService);
+  movieTabList = ['Películas de estreno', 'Películas recén actualizadas'];
   moviesList: Array<MovieSliderModel> = [];
   selectedMovieTab = 0;
+  tvShowsTabList = ['Series recén actualizadas'];
+  tvShowsList: Array<TvShowSliderModel> = [];
+  selectedTVTab = 0;
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.getSliderMovies('0');
+      this.getSliderTvShows('true');
     }, 0);
   }
 
@@ -75,6 +82,24 @@ export class HomeComponent{
     const selectedType = movieTypes[index];
     if (selectedType) {
       this.getSliderMovies(selectedType);
+    }
+  }
+
+  private async getSliderTvShows(type: string) {
+    try {
+      const { data } = await this.tvShowsService.getSliderTvShows('tvshows', type) as { data: TvShowSliderModel[] };
+      this.tvShowsList = data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  tabTVChange({ index }: { index: number; }) {
+    this.selectedTVTab = index;
+    const tvShowTypes = ['true'];
+    const selectedType = tvShowTypes[index];
+    if (selectedType) {
+      this.getSliderTvShows(selectedType);
     }
   }
 }
