@@ -1,11 +1,16 @@
-<footer class="bg-gray-900 flex justify-center items-center py-6 text-sm text-white fixed bottom-0 left-0 w-full z-50">
-    <div class="flex items-center">
-      <span>Desarrollado por <span class="font-bold transition-colors duration-400 ease-custom">JoseVale99</span></span>
-      <a *ngFor="let social of socialData" [href]="social.url"
-         target="_blank" rel="noopener noreferrer" [attr.aria-label]="'JoseVale99 ' + social.name" [title]="social.name"
-         class="ml-2 transition-transform duration-150 ease-in-out hover:scale-110">
-        <img [src]="social.img" [alt]="'Películas & Series' + social.name" 
-             loading="lazy" [height]="24" [width]="24" class="w-6 rounded-md">
-      </a>
-    </div>
-  </footer>
+<footer class="bg-gray-900 flex justify-center items-center py-6 text-sm text-white">
+  <div class="flex items-center">
+    <span>Desarrollado por <span class="font-bold transition-colors duration-400 ease-custom">
+      JoseVale99</span>
+    </span>
+    <a *ngFor="let social of socialData" [href]="social.url"
+      target="_blank" rel="noopener noreferrer" 
+      [attr.aria-label]="'JoseVale99 ' + social.name" [title]="social.name"
+      class="ml-2 transition-transform duration-150 ease-in-out hover:scale-110">
+      
+      <img [src]="social.img"
+        [alt]="'Películas & Series' + social.name"
+        loading="lazy" [height]="24" [width]="24" class="w-6 rounded-md"/>
+    </a>
+  </div>
+</footer>
