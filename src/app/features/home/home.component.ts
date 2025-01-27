@@ -33,9 +33,9 @@ export class HomeComponent{
     centeredSlides: true,
     initialSlide: 5,
     coverflowEffect: {
-      rotate: 20,
+      rotate: 12,
       stretch: 0,
-      depth: 20,
+      depth: 40,
       modifier: 1,
       slideShadows: false,
     },
