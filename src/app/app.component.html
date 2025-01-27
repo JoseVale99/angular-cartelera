@@ -1,14 +1,12 @@
-<div [ngClass]="{
-      'blue-theme': checkSelectedTheme(themeColorEnum.BLUE),
-      'green-theme': checkSelectedTheme(themeColorEnum.GREEN)
-}">
+<div class="min-h-screen flex flex-col" 
+[ngClass]="{ 'blue-theme': checkSelectedTheme(themeColorEnum.BLUE),
+  'green-theme': checkSelectedTheme(themeColorEnum.GREEN)}">
 
   <app-navbar (changeColorTheme)="changeColorTheme($event)"></app-navbar>
-
-  <main role="main" style="min-height: 92vh; overflow-y: auto;" class="bg-gray-800">
-    <router-outlet></router-outlet>
+    
+  <main class="flex-grow bg-gray-800 overflow-y-auto">
+      <router-outlet></router-outlet>
   </main>
 
   <app-footer></app-footer>
-
 </div>
