@@ -31,7 +31,7 @@ export class HomeComponent{
     grabCursor: true,
     effect: 'coverflow', 
     centeredSlides: false,
-    initialSlide: 5,
+    initialSlide: 2,
     coverflowEffect: {
       rotate: 12,
       stretch: 0,
