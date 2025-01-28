@@ -2,10 +2,11 @@ import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angul
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { register } from 'swiper/element/bundle';
 import { registerLocaleData } from '@angular/common';
 import localeEsMx from '@angular/common/locales/es-MX';
+import { progressBarInterceptorInterceptor } from './shared/interceptors/progress-bar-interceptor.interceptor';
 
 registerLocaleData(localeEsMx);
 
@@ -13,6 +14,7 @@ register();
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), 
-    { provide: LOCALE_ID, useValue: 'es-MX' }, provideAnimationsAsync('noop'), provideHttpClient()
+    { provide: LOCALE_ID, useValue: 'es-MX' }, provideAnimationsAsync('noop'), 
+    provideHttpClient(withInterceptors([progressBarInterceptorInterceptor]))
   ]
 };
