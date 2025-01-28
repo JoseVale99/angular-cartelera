@@ -1,5 +1,5 @@
 import { CommonModule, SlicePipe } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { MoviesService } from '../content/services/movies.service';
@@ -56,6 +56,7 @@ export class HomeComponent{
   tvShowsTabList = ['Series recén actualizadas'];
   tvShowsList: Array<TvShowSliderModel> = [];
   selectedTVTab = 0;
+  public isLoading = signal(false);
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -66,10 +67,13 @@ export class HomeComponent{
 
   private async getSliderMovies(type: string) {
     try {
+      this.isLoading.set(true);
       const { data } = await this.moviesService.getSliderMovies('movies', type) as { data: MovieSliderModel[] };
       this.moviesList = data;
+      this.isLoading.set(false);
     } catch (error) {
       console.error(error);
+      this.isLoading.set(false);
     }
   }
 
@@ -84,10 +88,13 @@ export class HomeComponent{
 
   private async getSliderTvShows(type: string) {
     try {
+      this.isLoading.set(true);
       const { data } = await this.tvShowsService.getSliderTvShows('tvshows', type) as { data: TvShowSliderModel[] };
       this.tvShowsList = data;
+      this.isLoading.set(false);
     } catch (error) {
       console.error(error);
+      this.isLoading.set(false);
     }
   }
 
