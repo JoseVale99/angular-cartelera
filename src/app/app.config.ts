@@ -14,7 +14,8 @@ register();
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), 
-    { provide: LOCALE_ID, useValue: 'es-MX' }, provideAnimationsAsync('noop'), 
+    { provide: LOCALE_ID, useValue: 'es-MX' }, 
+    provideAnimationsAsync(), 
     provideHttpClient(withInterceptors([progressBarInterceptorInterceptor]))
   ]
 };
