@@ -30,7 +30,7 @@ export class HomeComponent{
     watchSlidesProgress: true,
     grabCursor: true,
     effect: 'coverflow', 
-    centeredSlides: true,
+    centeredSlides: false,
     initialSlide: 5,
     coverflowEffect: {
       rotate: 12,
