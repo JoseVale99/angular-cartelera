@@ -1,4 +1,4 @@
-import { CommonModule, SlicePipe } from '@angular/common';
+import {  SlicePipe } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -12,7 +12,6 @@ import { TvShowsService } from '../content/services/tv-shows.service';
 @Component({
   selector: 'app-home',
   imports: [
-    CommonModule,
     SwiperDirective,
     SlicePipe,
     MatTabGroup,
@@ -29,18 +28,11 @@ export class HomeComponent{
   config: SwiperOptions = {
     watchSlidesProgress: true,
     grabCursor: true,
-    effect: 'coverflow', 
+    effect: 'slide', 
     centeredSlides: false,
-    initialSlide: 2,
-    coverflowEffect: {
-      rotate: 12,
-      stretch: 0,
-      depth: 40,
-      modifier: 1,
-      slideShadows: false,
-    },
+    initialSlide: 0,
     breakpoints: {
-      1440: {slidesPerView:9, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
+      1440: {slidesPerView:8, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
       992: {slidesPerView: 6, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
       768: {slidesPerView: 4, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0}, 
       576: {slidesPerView: 2, spaceBetween: 25, slidesOffsetBefore: 0, slidesOffsetAfter: 0},
