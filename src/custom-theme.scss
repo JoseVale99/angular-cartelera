@@ -51,6 +51,15 @@ $theme: mat.define-theme((
   @include mat.all-component-colors($theme);
 }
 
+// Paginador personalizado
+.mat-paginator-color {
+  @include mat.paginator-overrides((
+    container-text-color: white,
+    container-background-color: transparent,
+    container-size: 20px,
+    container-text-size: 14px
+  ));
+}
 // Dialogo
 
 .dialog-title-container {
