@@ -1,0 +1,678 @@
+{
+  "success": true,
+  "status": 200,
+  "message": "Data retrieved successfully",
+  "data": {
+    "genres": [
+      {
+        "id": 96,
+        "name": "Acción",
+        "slug": "accion",
+        "tax": "genres"
+      },
+      {
+        "id": 4179,
+        "name": "Action & Adventure",
+        "slug": "action-adventure",
+        "tax": "genres"
+      },
+      {
+        "id": 71,
+        "name": "Animación",
+        "slug": "animacion",
+        "tax": "genres"
+      },
+      {
+        "id": 72,
+        "name": "Aventura",
+        "slug": "aventura",
+        "tax": "genres"
+      },
+      {
+        "id": 1094,
+        "name": "Bélica",
+        "slug": "belica",
+        "tax": "genres"
+      },
+      {
+        "id": 293,
+        "name": "Ciencia ficción",
+        "slug": "ciencia-ficcion",
+        "tax": "genres"
+      },
+      {
+        "id": 25,
+        "name": "Comedia",
+        "slug": "comedia",
+        "tax": "genres"
+      },
+      {
+        "id": 24,
+        "name": "Crimen",
+        "slug": "crimen",
+        "tax": "genres"
+      },
+      {
+        "id": 3118,
+        "name": "Documental",
+        "slug": "documental",
+        "tax": "genres"
+      },
+      {
+        "id": 114,
+        "name": "Drama",
+        "slug": "drama",
+        "tax": "genres"
+      },
+      {
+        "id": 50,
+        "name": "Familia",
+        "slug": "familia",
+        "tax": "genres"
+      },
+      {
+        "id": 51,
+        "name": "Fantasía",
+        "slug": "fantasia",
+        "tax": "genres"
+      },
+      {
+        "id": 375,
+        "name": "Historia",
+        "slug": "historia",
+        "tax": "genres"
+      },
+      {
+        "id": 5008,
+        "name": "Kids",
+        "slug": "kids",
+        "tax": "genres"
+      },
+      {
+        "id": 115,
+        "name": "Misterio",
+        "slug": "misterio",
+        "tax": "genres"
+      },
+      {
+        "id": 1968,
+        "name": "Música",
+        "slug": "musica",
+        "tax": "genres"
+      },
+      {
+        "id": 2292,
+        "name": "Película de TV",
+        "slug": "pelicula-de-tv",
+        "tax": "genres"
+      },
+      {
+        "id": 11652,
+        "name": "Reality",
+        "slug": "reality",
+        "tax": "genres"
+      },
+      {
+        "id": 26,
+        "name": "Romance",
+        "slug": "romance",
+        "tax": "genres"
+      },
+      {
+        "id": 4178,
+        "name": "Sci-Fi & Fantasy",
+        "slug": "sci-fi-fantasy",
+        "tax": "genres"
+      },
+      {
+        "id": 18775,
+        "name": "Soap",
+        "slug": "soap",
+        "tax": "genres"
+      },
+      {
+        "id": 116,
+        "name": "Suspense",
+        "slug": "suspense",
+        "tax": "genres"
+      },
+      {
+        "id": 45999,
+        "name": "Talk",
+        "slug": "talk",
+        "tax": "genres"
+      },
+      {
+        "id": 270,
+        "name": "Terror",
+        "slug": "terror",
+        "tax": "genres"
+      },
+      {
+        "id": 7925,
+        "name": "War & Politics",
+        "slug": "war-politics",
+        "tax": "genres"
+      },
+      {
+        "id": 1184,
+        "name": "Western",
+        "slug": "western",
+        "tax": "genres"
+      }
+    ],
+    "years": [
+      {
+        "id": 7697,
+        "name": "1932",
+        "slug": "1932",
+        "tax": "years"
+      },
+      {
+        "id": 5817,
+        "name": "1933",
+        "slug": "1933",
+        "tax": "years"
+      },
+      {
+        "id": 1464,
+        "name": "1937",
+        "slug": "1937",
+        "tax": "years"
+      },
+      {
+        "id": 7423,
+        "name": "1939",
+        "slug": "1939",
+        "tax": "years"
+      },
+      {
+        "id": 13147,
+        "name": "1940",
+        "slug": "1940",
+        "tax": "years"
+      },
+      {
+        "id": 13665,
+        "name": "1941",
+        "slug": "1941",
+        "tax": "years"
+      },
+      {
+        "id": 52043,
+        "name": "1942",
+        "slug": "1942",
+        "tax": "years"
+      },
+      {
+        "id": 6009,
+        "name": "1943",
+        "slug": "1943",
+        "tax": "years"
+      },
+      {
+        "id": 8456,
+        "name": "1946",
+        "slug": "1946",
+        "tax": "years"
+      },
+      {
+        "id": 14516,
+        "name": "1949",
+        "slug": "1949",
+        "tax": "years"
+      },
+      {
+        "id": 50025,
+        "name": "1950",
+        "slug": "1950",
+        "tax": "years"
+      },
+      {
+        "id": 13983,
+        "name": "1951",
+        "slug": "1951",
+        "tax": "years"
+      },
+      {
+        "id": 12890,
+        "name": "1953",
+        "slug": "1953",
+        "tax": "years"
+      },
+      {
+        "id": 50548,
+        "name": "1954",
+        "slug": "1954",
+        "tax": "years"
+      },
+      {
+        "id": 49343,
+        "name": "1955",
+        "slug": "1955",
+        "tax": "years"
+      },
+      {
+        "id": 9562,
+        "name": "1956",
+        "slug": "1956",
+        "tax": "years"
+      },
+      {
+        "id": 6217,
+        "name": "1957",
+        "slug": "1957",
+        "tax": "years"
+      },
+      {
+        "id": 5901,
+        "name": "1958",
+        "slug": "1958",
+        "tax": "years"
+      },
+      {
+        "id": 220,
+        "name": "1959",
+        "slug": "1959",
+        "tax": "years"
+      },
+      {
+        "id": 6620,
+        "name": "1960",
+        "slug": "1960",
+        "tax": "years"
+      },
+      {
+        "id": 16230,
+        "name": "1961",
+        "slug": "1961",
+        "tax": "years"
+      },
+      {
+        "id": 6990,
+        "name": "1962",
+        "slug": "1962",
+        "tax": "years"
+      },
+      {
+        "id": 7031,
+        "name": "1963",
+        "slug": "1963",
+        "tax": "years"
+      },
+      {
+        "id": 7058,
+        "name": "1964",
+        "slug": "1964",
+        "tax": "years"
+      },
+      {
+        "id": 7074,
+        "name": "1965",
+        "slug": "1965",
+        "tax": "years"
+      },
+      {
+        "id": 3880,
+        "name": "1966",
+        "slug": "1966",
+        "tax": "years"
+      },
+      {
+        "id": 7098,
+        "name": "1967",
+        "slug": "1967",
+        "tax": "years"
+      },
+      {
+        "id": 4671,
+        "name": "1968",
+        "slug": "1968",
+        "tax": "years"
+      },
+      {
+        "id": 7113,
+        "name": "1969",
+        "slug": "1969",
+        "tax": "years"
+      },
+      {
+        "id": 8580,
+        "name": "1970",
+        "slug": "1970",
+        "tax": "years"
+      },
+      {
+        "id": 5582,
+        "name": "1971",
+        "slug": "1971",
+        "tax": "years"
+      },
+      {
+        "id": 5768,
+        "name": "1972",
+        "slug": "1972",
+        "tax": "years"
+      },
+      {
+        "id": 5861,
+        "name": "1973",
+        "slug": "1973",
+        "tax": "years"
+      },
+      {
+        "id": 5789,
+        "name": "1974",
+        "slug": "1974",
+        "tax": "years"
+      },
+      {
+        "id": 15688,
+        "name": "1975",
+        "slug": "1975",
+        "tax": "years"
+      },
+      {
+        "id": 5224,
+        "name": "1976",
+        "slug": "1976",
+        "tax": "years"
+      },
+      {
+        "id": 4886,
+        "name": "1977",
+        "slug": "1977",
+        "tax": "years"
+      },
+      {
+        "id": 6921,
+        "name": "1978",
+        "slug": "1978",
+        "tax": "years"
+      },
+      {
+        "id": 4986,
+        "name": "1979",
+        "slug": "1979",
+        "tax": "years"
+      },
+      {
+        "id": 10621,
+        "name": "1980",
+        "slug": "1980",
+        "tax": "years"
+      },
+      {
+        "id": 7233,
+        "name": "1981",
+        "slug": "1981",
+        "tax": "years"
+      },
+      {
+        "id": 1726,
+        "name": "1982",
+        "slug": "1982",
+        "tax": "years"
+      },
+      {
+        "id": 5274,
+        "name": "1983",
+        "slug": "1983",
+        "tax": "years"
+      },
+      {
+        "id": 5459,
+        "name": "1984",
+        "slug": "1984",
+        "tax": "years"
+      },
+      {
+        "id": 5096,
+        "name": "1985",
+        "slug": "1985",
+        "tax": "years"
+      },
+      {
+        "id": 4370,
+        "name": "1986",
+        "slug": "1986",
+        "tax": "years"
+      },
+      {
+        "id": 5258,
+        "name": "1987",
+        "slug": "1987",
+        "tax": "years"
+      },
+      {
+        "id": 669,
+        "name": "1988",
+        "slug": "1988",
+        "tax": "years"
+      },
+      {
+        "id": 2965,
+        "name": "1989",
+        "slug": "1989",
+        "tax": "years"
+      },
+      {
+        "id": 202,
+        "name": "1990",
+        "slug": "1990",
+        "tax": "years"
+      },
+      {
+        "id": 3547,
+        "name": "1991",
+        "slug": "1991",
+        "tax": "years"
+      },
+      {
+        "id": 1648,
+        "name": "1992",
+        "slug": "1992",
+        "tax": "years"
+      },
+      {
+        "id": 296,
+        "name": "1993",
+        "slug": "1993",
+        "tax": "years"
+      },
+      {
+        "id": 121,
+        "name": "1994",
+        "slug": "1994",
+        "tax": "years"
+      },
+      {
+        "id": 1777,
+        "name": "1995",
+        "slug": "1995",
+        "tax": "years"
+      },
+      {
+        "id": 507,
+        "name": "1996",
+        "slug": "1996",
+        "tax": "years"
+      },
+      {
+        "id": 751,
+        "name": "1997",
+        "slug": "1997",
+        "tax": "years"
+      },
+      {
+        "id": 54,
+        "name": "1998",
+        "slug": "1998",
+        "tax": "years"
+      },
+      {
+        "id": 2397,
+        "name": "1999",
+        "slug": "1999",
+        "tax": "years"
+      },
+      {
+        "id": 486,
+        "name": "2000",
+        "slug": "2000",
+        "tax": "years"
+      },
+      {
+        "id": 98,
+        "name": "2001",
+        "slug": "2001",
+        "tax": "years"
+      },
+      {
+        "id": 2378,
+        "name": "2002",
+        "slug": "2002",
+        "tax": "years"
+      },
+      {
+        "id": 33,
+        "name": "2003",
+        "slug": "2003",
+        "tax": "years"
+      },
+      {
+        "id": 143,
+        "name": "2004",
+        "slug": "2004",
+        "tax": "years"
+      },
+      {
+        "id": 2906,
+        "name": "2005",
+        "slug": "2005",
+        "tax": "years"
+      },
+      {
+        "id": 2857,
+        "name": "2006",
+        "slug": "2006",
+        "tax": "years"
+      },
+      {
+        "id": 79,
+        "name": "2007",
+        "slug": "2007",
+        "tax": "years"
+      },
+      {
+        "id": 897,
+        "name": "2008",
+        "slug": "2008",
+        "tax": "years"
+      },
+      {
+        "id": 234,
+        "name": "2009",
+        "slug": "2009",
+        "tax": "years"
+      },
+      {
+        "id": 954,
+        "name": "2010",
+        "slug": "2010",
+        "tax": "years"
+      },
+      {
+        "id": 1135,
+        "name": "2011",
+        "slug": "2011",
+        "tax": "years"
+      },
+      {
+        "id": 2924,
+        "name": "2012",
+        "slug": "2012",
+        "tax": "years"
+      },
+      {
+        "id": 1367,
+        "name": "2013",
+        "slug": "2013",
+        "tax": "years"
+      },
+      {
+        "id": 2836,
+        "name": "2014",
+        "slug": "2014",
+        "tax": "years"
+      },
+      {
+        "id": 1741,
+        "name": "2015",
+        "slug": "2015",
+        "tax": "years"
+      },
+      {
+        "id": 1759,
+        "name": "2016",
+        "slug": "2016",
+        "tax": "years"
+      },
+      {
+        "id": 650,
+        "name": "2017",
+        "slug": "2017",
+        "tax": "years"
+      },
+      {
+        "id": 611,
+        "name": "2018",
+        "slug": "2018",
+        "tax": "years"
+      },
+      {
+        "id": 3994,
+        "name": "2019",
+        "slug": "2019",
+        "tax": "years"
+      },
+      {
+        "id": 4776,
+        "name": "2020",
+        "slug": "2020",
+        "tax": "years"
+      },
+      {
+        "id": 3364,
+        "name": "2021",
+        "slug": "2021",
+        "tax": "years"
+      },
+      {
+        "id": 636,
+        "name": "2022",
+        "slug": "2022",
+        "tax": "years"
+      },
+      {
+        "id": 252,
+        "name": "2023",
+        "slug": "2023",
+        "tax": "years"
+      },
+      {
+        "id": 7,
+        "name": "2024",
+        "slug": "2024",
+        "tax": "years"
+      },
+      {
+        "id": 50673,
+        "name": "2025",
+        "slug": "2025",
+        "tax": "years"
+      }
+    ]
+  },
+  "timestamp": "2024-04-02T20:03:00Z"
+}
