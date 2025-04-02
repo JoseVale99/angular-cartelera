@@ -1,35 +1,61 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, Inject, inject, signal } from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import { PosterCardComponent } from '../../../shared/components/poster-card/poster-card.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MoviesService } from '../services/movies.service';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-
+import { Router } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-content-main',
   imports: [
     MatPaginatorModule,
     MatCardModule,
-    PosterCardComponent
+    PosterCardComponent,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
   ],
   templateUrl: './content-main.component.html',
   styleUrl: './content-main.component.css'
 })
 export class ContentMainComponent {
   private moviesService = inject(MoviesService);
+  private matPaginatorIntl = inject(MatPaginatorIntl);
+  private router = inject(Router);
+  public isLoading = signal(false);
   moviesList: any[] = [];
   totalResults: number = 0;
   perPage: number = 0;
-  private matPaginatorIntl = inject(MatPaginatorIntl);
-  public isLoading = signal(false);
+  contentType = '';
+  genres: any[] = [];
+  years: any[] = [];
+  selectedGenres: string[] = [];
+  selectedYears: string[] = [];
+  selectedOrder: string = 'new';
   
-  
+
+  constructor(){
+    this.contentType = this.router.url.split('/')[1];
+  }
+
   ngAfterViewInit(): void {
     this.setConfigPaginator();
+    this.getGeneres();
     setTimeout(() => {
-      this.getMovies(1, '', '', 'latest');
+      if(this.contentType === 'movies') {
+        this.getMovies(1, '', '', 'latest');
+      }
     }, 0);
+  }
+
+  private async getGeneres() {
+  const  data  = await this.moviesService.getGeneres() as any;
+   this.genres = data.data.genres;
+   this.years = data.data.years;
   }
 
   setConfigPaginator() {
@@ -55,7 +81,11 @@ export class ContentMainComponent {
     }
   }
 
+  filterContent(): void {
+    this.getMovies(1, this.selectedGenres.join(','), this.selectedYears.join(','), this.selectedOrder);
+  }
+
   changePage(event: PageEvent) {
-    this.getMovies(event.pageIndex + 1, '', '', 'latest');
+    this.getMovies(event.pageIndex + 1, this.selectedGenres.join(','), this.selectedYears.join(','), this.selectedOrder);
   }
 }
