@@ -14,8 +14,6 @@ import { ProgressBarComponent } from '../../../shared/components/progress-bar/pr
   imports: [
     MatMenuModule,
     RouterLinkActive,
-    CommonModule,
-    NgForOf,
     MatIconModule,
     MatAnchor,
     MatIconButton,
@@ -34,13 +32,6 @@ export class NavbarComponent {
 
   themeColorList = themeColors;
   themeColorInit: string = Color.RED;
-
-  isScrolled = false;
-
-  @HostListener('window:scroll')
-  scrollEvent() {
-    this.isScrolled = window.scrollY >= 30;
-  }
   
   setColorTheme(color: string) {
     this.themeColorInit = color;
