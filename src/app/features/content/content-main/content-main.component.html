@@ -1,0 +1,16 @@
+<main class="text-white pt-16 px-4 sm:px-0 flex justify-center">
+    <div class="w-full max-w-7xl">
+     @defer {
+      <div class="flex flex-col items-center gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" lazy="true" [@fadeAnimation]>
+          @for (content of moviesList; track $index) {
+            <app-poster-card [model]="content" class="w-full"></app-poster-card>
+          }
+        </div>
+        <div class="w-full mb-10">
+          <mat-paginator class="mat-paginator-color" [length]="totalResults" [pageSize]="perPage" (page)="changePage($event)" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+      }
+    </div>
+  </main>
