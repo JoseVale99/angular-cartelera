@@ -23,7 +23,7 @@ import { TvShowsService } from '../content/services/tv-shows.service';
   styleUrl: './home.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomeComponent{
+export class HomeComponent {
 
   config: SwiperOptions = {
     watchSlidesProgress: true,
