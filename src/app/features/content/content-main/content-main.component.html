@@ -25,10 +25,9 @@
           <div class="w-full lg:w-auto lg:ml-4 mt-2 lg:mt-0">
             <mat-form-field appearance="fill" class="w-full">
               <mat-label>Ordenar por</mat-label>
-              <mat-select [(value)]="selectedOrder">
-                <mat-option value="new">Nuevo</mat-option>
-                <mat-option value="old">Antiguo</mat-option>
-                <mat-option value="popular">Popular</mat-option>
+              <mat-select [(value)]="selectedOrder" (selectionChange)="filterContent()">
+                <mat-option value="latest">Nuevo</mat-option>
+                <mat-option value="modified">Actualizado</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

@@ -35,7 +35,7 @@ export class ContentMainComponent {
   years: any[] = [];
   selectedGenres: string[] = [];
   selectedYears: string[] = [];
-  selectedOrder: string = 'new';
+  selectedOrder: string = 'latest';
   
 
   constructor(){
@@ -47,7 +47,7 @@ export class ContentMainComponent {
     this.getGeneres();
     setTimeout(() => {
       if(this.contentType === 'movies') {
-        this.getMovies(1, '', '', 'latest');
+        this.getMovies(1, '', '', this.selectedOrder);
       }
     }, 0);
   }
@@ -83,10 +83,6 @@ export class ContentMainComponent {
 
   filterContent(): void {
     this.getMovies(1, this.selectedGenres.join(','), this.selectedYears.join(','), this.selectedOrder);
-  }
-
-  displayNothing() {
-    return '';
   }
 
   changePage(event: PageEvent) {
