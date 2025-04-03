@@ -53,9 +53,9 @@ export class ContentMainComponent {
   }
 
   private async getGeneres() {
-  const  data  = await this.moviesService.getGeneres() as any;
-   this.genres = data.data.genres;
-   this.years = data.data.years;
+    const data = await this.moviesService.getGeneres() as any;
+    this.genres = data.data.genres;
+    this.years = data.data.years;
   }
 
   setConfigPaginator() {
@@ -83,6 +83,10 @@ export class ContentMainComponent {
 
   filterContent(): void {
     this.getMovies(1, this.selectedGenres.join(','), this.selectedYears.join(','), this.selectedOrder);
+  }
+
+  displayNothing() {
+    return '';
   }
 
   changePage(event: PageEvent) {

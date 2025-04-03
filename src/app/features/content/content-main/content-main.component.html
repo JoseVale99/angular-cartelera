@@ -2,7 +2,7 @@
     <div class="w-full max-w-7xl mt-10">
         <div class="flex flex-col lg:flex-row lg:justify-between gap-4 mb-6">
           <div class="flex flex-nowrap gap-4 pb-2 sm:grid sm:grid-cols-2">
-            <mat-form-field appearance="outline" class="min-w-[160px] sm:w-full">
+            <mat-form-field appearance="fill" class="min-w-[160px] sm:w-full">
               <mat-label>Géneros</mat-label>
               <mat-select [(value)]="selectedGenres" multiple (selectionChange)="filterContent()">
                 @for (genre of genres; track genre.id) {
@@ -11,7 +11,7 @@
               </mat-select>
             </mat-form-field>
         
-            <mat-form-field appearance="outline" class="min-w-[160px] sm:w-full">
+            <mat-form-field appearance="fill" class="min-w-[160px] sm:w-full">
               <mat-label>Año</mat-label>
               <mat-select [(value)]="selectedYears" multiple (selectionChange)="filterContent()">
                 <mat-option value="">Años</mat-option>
@@ -23,7 +23,7 @@
           </div>
         
           <div class="w-full lg:w-auto lg:ml-4 mt-2 lg:mt-0">
-            <mat-form-field appearance="outline" class="w-full">
+            <mat-form-field appearance="fill" class="w-full">
               <mat-label>Ordenar por</mat-label>
               <mat-select [(value)]="selectedOrder">
                 <mat-option value="new">Nuevo</mat-option>
@@ -33,7 +33,7 @@
             </mat-form-field>
           </div>
         </div>
-        
+
       @if(this.contentType === 'movies'){
         @defer {
           <div class="flex flex-col items-center gap-6">
