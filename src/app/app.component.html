@@ -1,6 +1,6 @@
 <div class="min-h-screen flex flex-col"
   [ngClass]="{
-    'blue-theme': checkSelectedTheme(themeColorEnum.BLUE),
+    'red-theme': checkSelectedTheme(themeColorEnum.RED),
     'green-theme': checkSelectedTheme(themeColorEnum.GREEN)}">
     <!-- Navbar -->
     <app-navbar (changeColorTheme)="changeColorTheme($event)"></app-navbar>

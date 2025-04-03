@@ -15,7 +15,7 @@ import { Color } from './core/enums/colors.enum';
 export class AppComponent {
   themeColorList = themeColors;
   themeColorEnum = Color;
-  themeColorInit: string = Color.RED;
+  themeColorInit: string = Color.BLUE;
 
   constructor( private router: Router) {}
 
