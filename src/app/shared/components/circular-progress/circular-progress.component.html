@@ -2,13 +2,13 @@
     <svg class="w-10 h-10" viewBox="0 0 48 48">
         <circle class="text-gray-300" cx="24" cy="24" r="18" stroke-width="4" fill="none" stroke="currentColor" />
 
-        <circle [ngClass]="getColorRating" cx="24" cy="24" r="18" 
-        stroke-width="4" fill="none" stroke="currentColor" [attr.stroke-dasharray]="rating === 10 ? '113, 113' : rating * 11.3 + ', 113'"
+        <circle [class]="rating() < 6 ? 'text-red-600' : 'text-green-600'" cx="24" cy="24" r="18" 
+        stroke-width="4" fill="none" stroke="currentColor" [attr.stroke-dasharray]="rating() === 10 ? '113, 113' : rating()! * 11.3 + ', 113'"
         stroke-linecap="round" transform="rotate(-90 24 24)"/>
 
         <text x="23" y="29" text-anchor="middle" font-size="13.5" fill="currentColor" 
-        [ngClass]="getColorRating" font-weight="bold">
-        {{ rating || 0.0 | number:'1.1-1' }}
+        [class]="rating() < 6 ? 'text-red-600' : 'text-green-600'" font-weight="bold">
+        {{ rating() || 0.0 }}
         </text>
     </svg>
 </div>
