@@ -1,7 +1,6 @@
-import { Component, computed, EventEmitter, HostListener, inject, Output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, Output } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CommonModule, NgForOf } from '@angular/common';
 import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { themeColors } from '../../constants/theme-colors';
 import { Color } from '../../enums/colors.enum';
@@ -31,7 +30,7 @@ export class NavbarComponent {
   isMenuOpen = false;
 
   themeColorList = themeColors;
-  themeColorInit: string = Color.RED;
+  themeColorInit: string = Color.BLUE;
   
   setColorTheme(color: string) {
     this.themeColorInit = color;
