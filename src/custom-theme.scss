@@ -15,7 +15,7 @@
   .activated-route {border-color: $primary-color !important;}
 }
 
-$theme-primary: mat.$red-palette;
+$theme-primary:  mat.$blue-palette;
 
 $theme: mat.define-theme((
   color: (
@@ -29,22 +29,22 @@ $theme: mat.define-theme((
   @include mat.all-component-themes($theme);
 }
 
-.blue-theme {
+.green-theme {
   $theme: mat.define-theme((
     color: (
       theme-type: dark,
-      primary: mat.$blue-palette,
+      primary: mat.$green-palette,
     ),
   ));
   @include palette($theme);
   @include mat.all-component-colors($theme);
 }
 
-.green-theme {
+.red-theme {
   $theme: mat.define-theme((
     color: (
       theme-type: dark,
-      primary: mat.$green-palette,
+      primary: mat.$red-palette,
     ),
   ));
   @include palette($theme);
