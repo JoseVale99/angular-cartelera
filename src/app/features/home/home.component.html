@@ -24,7 +24,7 @@
         <div [@fadeAnimation]>
           <swiper-container appSwiper [config]="config" pagination="true" scrollbar="false">
             @for (movie of moviesList | slice:0:15; track movie) {
-              <swiper-slide [@slideAnimation] lazy="true">
+              <swiper-slide [@slideAnimation]>
                 <app-poster-card [model]="movie" [isMovie]="true"></app-poster-card>
               </swiper-slide>
             }
@@ -33,7 +33,7 @@
       </mat-tab>
       } @empty {
         <div class="flex justify-center items-center h-40">
-          <p class="text-white text-lg text-center p-4 bg-gray-800 bg-opacity-75" [@fadeAnimation]>
+          <p class="text-white text-lg text-center p-4 bg-gray-800 bg-opacity-75">
             No hay películas disponibles
           </p>
         </div>
@@ -55,7 +55,7 @@
         <div [@fadeAnimation]>
           <swiper-container appSwiper [config]="config" pagination="true" scrollbar="false">
             @for (tvShow of tvShowsList | slice:0:15; track tvShow) {
-              <swiper-slide [@slideAnimation] lazy="true">
+              <swiper-slide [@slideAnimation]>
                 <app-poster-card [model]="tvShow" [isMovie]="false"></app-poster-card>
               </swiper-slide>
             }
@@ -64,7 +64,7 @@
       </mat-tab>
       } @empty {
         <div class="flex justify-center items-center h-40">
-          <p class="text-white text-lg text-center p-4 bg-gray-800 bg-opacity-75" [@fadeAnimation]>
+          <p class="text-white text-lg text-center p-4 bg-gray-800 bg-opacity-75">
             No hay series disponibles
           </p>
         </div>
