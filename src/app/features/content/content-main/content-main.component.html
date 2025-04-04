@@ -33,37 +33,23 @@
         </div>
 
       @if(this.contentType === 'movies'){
-          @if(this.isLoading()) {
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-5 mb-12">
-              @for (item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; track item) {
-                <div class="flex flex-col items-start bg-white shadow-lg rounded-2xl overflow-hidden transform transition-transform hover:scale-105 group animate-pulse">
-                  <div class="relative w-full h-[200px] bg-gray-300"></div>
-                  <div class="w-full bg-black bg-opacity-70 text-white p-2">
-                    <div class="h-4 bg-gray-400 rounded w-3/4 mb-2"></div>
-                    <div class="h-3 bg-gray-400 rounded w-1/2"></div>
-                  </div>
-                </div>
-              }
+        <div class="flex flex-col items-center gap-6">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
+        
+            @for (content of moviesList; track $index) {
+            <app-poster-card [model]="content" [isMovie]="true" class="w-full"></app-poster-card>
+            }
+            @if (moviesList.length === 0) {
+            <div class="col-span-full flex flex-col items-center p-8 bg-gray-800 bg-opacity-75 rounded-lg">
+              <p class="text-lg md:text-xl text-center">No hay películas disponibles</p>
             </div>
-          } @else {
-            @defer {
-            <div class="flex flex-col items-center gap-6">
-              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
-                @for (content of moviesList; track $index) {
-                <app-poster-card [model]="content" [isMovie]="true" class="w-full"></app-poster-card>
-                } @empty {
-                <div class="col-span-full flex flex-col items-center p-8 bg-gray-800 bg-opacity-75 rounded-lg">
-                  <p class="text-lg md:text-xl text-center">No hay películas disponibles</p>
-                </div>
-                }
-              </div>
-              <div class="w-full mb-10">
-                <mat-paginator class="mat-paginator-color" [length]="totalResults" [pageSize]="perPage" (page)="changePage($event)"
-                  showFirstLastButtons></mat-paginator>
-              </div>
-            </div>
-          }
-        }
+            }
+          </div>
+          <div class="w-full mb-10">
+            <mat-paginator class="mat-paginator-color" [length]="totalResults" [pageSize]="perPage" (page)="changePage($event)"
+              showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
       }
     </div>
   </main>

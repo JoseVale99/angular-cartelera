@@ -1,4 +1,4 @@
-import { Component, Inject, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import { PosterCardComponent } from '../../../shared/components/poster-card/poster-card.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -45,9 +45,9 @@ export class ContentMainComponent  implements OnInit {
   ngOnInit(): void {
     this.setConfigPaginator();
     this.getGeneres();
-      if(this.contentType === 'movies') {
-        this.getMovies(1, '', '', this.selectedOrder);
-      }
+    if (this.contentType === 'movies') {
+      this.getMovies(1, '', '', this.selectedOrder);
+    }
   }
 
   private async getGeneres() {
