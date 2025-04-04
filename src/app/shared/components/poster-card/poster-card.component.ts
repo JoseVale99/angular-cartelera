@@ -17,10 +17,9 @@ import { CircularProgressComponent } from '../circular-progress/circular-progres
 export class PosterCardComponent {
   model = input<any>();
   isMovie = input<boolean>();
-  posterUrl!: string;
   private readonly baseUrl = environment.urlBase + 'wp-content/uploads';
 
   imageBaseUrl(uuid: string): string {
-    return this.baseUrl + uuid;
+    return this.baseUrl + uuid || '/placeholder.jpg';
   }
 }
