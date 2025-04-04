@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { environment } from '../../../../environments/environment';
@@ -15,8 +15,8 @@ import { CircularProgressComponent } from '../circular-progress/circular-progres
   styleUrl: './poster-card.component.css'
 })
 export class PosterCardComponent {
-  @Input() model!: any;
-  @Input() isMovie!: boolean;
+  model = input<any>();
+  isMovie = input<boolean>();
   posterUrl!: string;
   private readonly baseUrl = environment.urlBase + 'wp-content/uploads';
 
