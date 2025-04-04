@@ -1,4 +1,4 @@
-import { Component, Inject, inject, signal } from '@angular/core';
+import { Component, Inject, inject, OnInit, signal } from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import { PosterCardComponent } from '../../../shared/components/poster-card/poster-card.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -17,12 +17,12 @@ import { MatOptionModule } from '@angular/material/core';
     PosterCardComponent,
     MatFormFieldModule,
     MatSelectModule,
-    MatOptionModule,
+    MatOptionModule
   ],
   templateUrl: './content-main.component.html',
   styleUrl: './content-main.component.css'
 })
-export class ContentMainComponent {
+export class ContentMainComponent  implements OnInit {
   private moviesService = inject(MoviesService);
   private matPaginatorIntl = inject(MatPaginatorIntl);
   private router = inject(Router);
@@ -42,14 +42,12 @@ export class ContentMainComponent {
     this.contentType = this.router.url.split('/')[1];
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.setConfigPaginator();
     this.getGeneres();
-    setTimeout(() => {
       if(this.contentType === 'movies') {
         this.getMovies(1, '', '', this.selectedOrder);
       }
-    }, 0);
   }
 
   private async getGeneres() {
