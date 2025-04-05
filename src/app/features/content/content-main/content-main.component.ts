@@ -1,14 +1,16 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import { PosterCardComponent } from '../../../shared/components/poster-card/poster-card.component';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MoviesService } from '../services/movies.service';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-
+import { MatInputModule } from '@angular/material/input';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 @Component({
   selector: 'app-content-main',
   imports: [
@@ -17,36 +19,75 @@ import { MatOptionModule } from '@angular/material/core';
     PosterCardComponent,
     MatFormFieldModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   templateUrl: './content-main.component.html',
   styleUrl: './content-main.component.css'
 })
-export class ContentMainComponent  implements OnInit {
+export class ContentMainComponent {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   private moviesService = inject(MoviesService);
   private matPaginatorIntl = inject(MatPaginatorIntl);
   private router = inject(Router);
+  private fb = inject(FormBuilder);
   public isLoading = signal(false);
   moviesList: any[] = [];
-  totalResults: number = 0;
-  perPage: number = 0;
+  totalResults = signal(0);
+  perPage = signal(1);
+  httpParams = new HttpParams();
   contentType = '';
   genres: any[] = [];
   years: any[] = [];
   selectedGenres: string[] = [];
   selectedYears: string[] = [];
   selectedOrder: string = 'latest';
+  searchForm!: FormGroup;
   
 
-  constructor(){
+  constructor() {
     this.contentType = this.router.url.split('/')[1];
+    this.crearFormulario();
   }
 
   ngOnInit(): void {
     this.setConfigPaginator();
     this.getGeneres();
     if (this.contentType === 'movies') {
-      this.getMovies(1, '', '', this.selectedOrder);
+      this.setHttpParams();
+      this.getMovies();
+    }
+  }
+
+  crearFormulario() {
+    this.searchForm = this.fb.group({
+      searchType: ['all']
+    });
+
+    this.searchForm.get('searchType')?.valueChanges.subscribe(type => {
+      if (type === 'all') {
+        this.searchForm.removeControl('searchQuery');
+        this.selectedGenres = [];
+        this.selectedYears = [];
+        this.selectedOrder = 'latest';
+        this.perPage.set(1);
+        this.setPage(0);
+        this.setHttpParams();
+        this.getMovies();
+      } else if (type === 'name') {
+        this.searchForm.addControl('searchQuery', this.fb.control('', [Validators.required]));
+      }
+    });
+  }
+
+  public async onSearch() {
+    if (this.searchForm.invalid) {
+      this.searchForm.markAllAsTouched();
+      return;
+    }
+    if (this.searchForm.get('searchType')?.value === 'name') {
+
     }
   }
 
@@ -54,6 +95,14 @@ export class ContentMainComponent  implements OnInit {
     const data = await this.moviesService.getGeneres() as any;
     this.genres = data.data.genres;
     this.years = data.data.years;
+  }
+
+  setHttpParams() {
+    this.httpParams = new HttpParams()
+      .set('genres', this.selectedGenres.join(',') || '')
+      .set('years', this.selectedYears.join(',') || '')
+      .set('order', this.selectedOrder)
+      .set('page', this.perPage());
   }
 
   setConfigPaginator() {
@@ -65,13 +114,13 @@ export class ContentMainComponent  implements OnInit {
     this.matPaginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => `${page * pageSize + 1} – ${Math.min((page + 1) * pageSize, length)} de ${length}`;
   }
 
-  private async getMovies(page: number, genres: string, years: string, order: string) {
+  private async getMovies() {
     this.isLoading.set(true);
     try {
-      const { data } = await this.moviesService.getAllMovies(page, genres, years, order) as any;
+      const { data } = await this.moviesService.getAllMovies(this.httpParams) as any;
       this.moviesList = data.posts;
-      this.totalResults = data.pagination.total;
-      this.perPage = data.pagination.per_page;
+      this.totalResults.set(data.pagination.total);
+      this.perPage.set(data.pagination.per_page);
       this.isLoading.set(false);
     } catch (error) {
       console.error(error);
@@ -80,10 +129,23 @@ export class ContentMainComponent  implements OnInit {
   }
 
   filterContent(): void {
-    this.getMovies(1, this.selectedGenres.join(','), this.selectedYears.join(','), this.selectedOrder);
+    this.setHttpParams();
+    this.getMovies();
   }
 
-  changePage(event: PageEvent) {
-    this.getMovies(event.pageIndex + 1, this.selectedGenres.join(','), this.selectedYears.join(','), this.selectedOrder);
+  find(e: PageEvent) {
+    const currentPage = e.pageIndex + 1;
+    if (currentPage !== this.perPage()) {
+      this.perPage.set(currentPage);
+      const updatedParams = this.httpParams.set('page', this.perPage());
+      this.httpParams = updatedParams;
+      this.getMovies();
+    }
+  }
+
+  setPage(index: number) {
+    if (this.paginator) {
+      this.paginator.pageIndex = index;
+    }
   }
 }

@@ -1,5 +1,29 @@
 <main class= "text-white pt-16 px-4 sm:px-6 md:px-8 lg:px-12 flex justify-center" [class.pointer-events-none]="isLoading()">
     <div class="w-full max-w-7xl mt-10">
+        <form autocomplete="off" [formGroup]="searchForm" class="flex flex-col sm:flex-row gap-4 mb-6 w-full" (ngSubmit)="onSearch()">
+            <mat-form-field appearance="fill" class="w-full sm:w-48">
+              <mat-label>Buscar por</mat-label>
+              <mat-select formControlName="searchType">
+                <mat-option value="all">Todos</mat-option>
+                <mat-option value="name">Nombre</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            @if (searchForm.get('searchType')?.value === 'name') {
+              <div class="flex flex-col sm:flex-row gap-4 w-full">
+                <mat-form-field appearance="fill" class="w-full">
+                  <mat-label>Nombre</mat-label>
+                  <input matInput formControlName="searchQuery" placeholder="Buscar por nombre">
+                </mat-form-field>
+                @if(searchForm.get('searchQuery')?.hasError('required')) {
+                  <mat-error>
+                    Por favor, ingresa un nombre.
+                  </mat-error>
+                }
+              </div>
+            }
+        </form>
+
         <div class="flex flex-col lg:flex-row lg:justify-between gap-4 mb-6">
           <div class="flex flex-nowrap gap-4 pb-2 sm:grid sm:grid-cols-2">
             <mat-form-field appearance="fill" class="min-w-[160px] sm:w-full">
@@ -46,7 +70,7 @@
             }
           </div>
           <div class="w-full mb-10">
-            <mat-paginator class="mat-paginator-color" [length]="totalResults" [pageSize]="perPage" (page)="changePage($event)"
+            <mat-paginator class="mat-paginator-color" [length]="totalResults()" [pageSize]="perPage()" (page)="find($event)"
               showFirstLastButtons></mat-paginator>
           </div>
         </div>

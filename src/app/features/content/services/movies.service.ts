@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { lastValueFrom } from 'rxjs';
@@ -25,8 +25,9 @@ export class MoviesService {
    * @param years
    * @param order
   */
-  getAllMovies(page: number, genres: string, years: string, order: string) {
-    const $response = this.http.get(this.baseUrl + `listing?post_type=movies&page=${page}&genres=${genres}&years=${years}&order=${order}`);
+  getAllMovies(params: HttpParams) {
+    //const $response = this.http.get(this.baseUrl + `listing?post_type=movies&page=${page}&genres=${genres}&years=${years}&order=${order}`);
+    const $response = this.http.get(this.baseUrl + `listing?post_type=movies`, { params });
     return lastValueFrom($response);
   }
 
