@@ -82,6 +82,26 @@
           </div>
           }
         </div>
+      }@else if(this.contentType === 'tv-shows') {
+        <div class="flex flex-col items-center gap-6 mb-5">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
+            @for (content of tvShowsList; track content._id) {
+            <app-poster-card [model]="content" [isMovie]="false" class="w-full"></app-poster-card>
+            }@empty {
+            <div class="col-span-full flex flex-col items-center p-8 bg-gray-800 bg-opacity-75 rounded-lg">
+              <p class="text-lg md:text-xl text-center">
+                Lo sentimos, no hay series disponibles.
+              </p>
+            </div>
+            }
+          </div>
+          @if(this.tvShowsList.length > 0) {
+          <div class="w-full mb-10">
+            <mat-paginator class="mat-paginator-color" [disabled]="isLoading()" [length]="totalResults()" [pageSize]="perPage()" (page)="find($event)"
+              showFirstLastButtons></mat-paginator>
+          </div>
+          }
+        </div>
       }
     </div>
   </main>

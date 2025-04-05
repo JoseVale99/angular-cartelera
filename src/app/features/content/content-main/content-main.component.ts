@@ -11,6 +11,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { TvShowsService } from '../services/tv-shows.service';
 @Component({
   selector: 'app-content-main',
   imports: [
@@ -29,11 +30,13 @@ import { HttpParams } from '@angular/common/http';
 export class ContentMainComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private moviesService = inject(MoviesService);
+  private tvShowsService = inject(TvShowsService);
   private matPaginatorIntl = inject(MatPaginatorIntl);
   private router = inject(Router);
   private fb = inject(FormBuilder);
   public isLoading = signal(false);
   moviesList: any[] = [];
+  tvShowsList: any[] = [];
   totalResults = signal(0);
   perPage = signal(1);
   httpParams = new HttpParams();
@@ -44,7 +47,6 @@ export class ContentMainComponent {
   selectedYears: string[] = [];
   selectedOrder: string = 'latest';
   searchForm!: FormGroup;
-  
 
   constructor() {
     this.contentType = this.router.url.split('/')[1];
@@ -57,6 +59,9 @@ export class ContentMainComponent {
     if (this.contentType === 'movies') {
       this.setHttpParams();
       this.getMovies();
+    } else if (this.contentType === 'tv-shows') {
+      this.setHttpParams();
+      this.getTvShows();
     }
   }
 
@@ -74,7 +79,7 @@ export class ContentMainComponent {
         this.perPage.set(1);
         this.setPage(0);
         this.setHttpParams();
-        this.getMovies();
+        this.contentType === 'movies' ? this.getMovies() : this.getTvShows();
       } else if (type === 'name') {
         this.searchForm.addControl('searchQuery', this.fb.control('', [Validators.required, Validators.minLength(3)]));
       }
@@ -97,14 +102,13 @@ export class ContentMainComponent {
     }
 
     if (this.searchForm.get('searchType')?.value === 'name') {
-      const query = this.searchForm.get('searchQuery')?.value;
       this.selectedGenres = [];
       this.selectedYears = [];
       this.selectedOrder = 'latest';
       this.perPage.set(1);
       this.setPage(0);
       this.setHttpParams();
-      await this.searchMovies();
+      this.contentType === 'movies' ? await this.searchMovies() : await this.searchTvShows();
     }
   }
 
@@ -113,7 +117,20 @@ export class ContentMainComponent {
     try {
       const { data } = await this.moviesService.searchMovies(this.httpParams) as any;
       this.moviesList = data.posts;
-      console.log(this.moviesList);
+      this.totalResults.set(data.pagination.total);
+      this.perPage.set(data.pagination.per_page);
+      this.isLoading.set(false);
+    } catch (error) {
+      console.error(error);
+      this.isLoading.set(false);
+    }
+  }
+
+  async searchTvShows() {
+    this.isLoading.set(true);
+    try {
+      const { data } = await this.tvShowsService.searchTvShows(this.httpParams) as any;
+      this.tvShowsList = data.posts;
       this.totalResults.set(data.pagination.total);
       this.perPage.set(data.pagination.per_page);
       this.isLoading.set(false);
@@ -151,6 +168,20 @@ export class ContentMainComponent {
     }
   }
 
+  private async getTvShows() {
+    this.isLoading.set(true);
+    try {
+      const { data } = await this.tvShowsService.getAllTvShows(this.httpParams) as any;
+      this.tvShowsList = data.posts;
+      this.totalResults.set(data.pagination.total);
+      this.perPage.set(data.pagination.per_page);
+      this.isLoading.set(false);
+    } catch (error) {
+      console.error(error);
+      this.isLoading.set(false);
+    }
+  }
+
   filterContent(): void {
     this.setHttpParams();
     this.getMovies();
@@ -162,10 +193,10 @@ export class ContentMainComponent {
       this.perPage.set(currentPage);
       const updatedParams = this.httpParams.set('page', this.perPage());
       this.httpParams = updatedParams;
-      if(this.searchForm.get('searchType')?.value === 'name') {
-        this.searchMovies();
-      }else{
-        this.getMovies();
+      if(this.contentType === 'movies'){
+        this.searchForm.get('searchType')?.value === 'name' ? this.searchMovies() : this.getMovies();
+      }else if(this.contentType === 'tv-shows'){
+        this.searchForm.get('searchType')?.value === 'name' ? this.searchTvShows() : this.getTvShows();
       }
     }
   }
