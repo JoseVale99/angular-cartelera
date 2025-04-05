@@ -20,7 +20,7 @@ export class PosterCardComponent implements OnChanges {
   isMovie = input<boolean>();
   private readonly baseUrl = environment.urlBase + 'wp-content/uploads';
   linkPath: string = '/';
-  imageUrl: string = 'assets/img/fallback.webp';
+  imageUrl!: string;
 
   ngOnChanges() {
     this.loadImage();
