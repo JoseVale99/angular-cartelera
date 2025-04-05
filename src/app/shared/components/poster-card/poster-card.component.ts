@@ -28,8 +28,8 @@ export class PosterCardComponent implements OnChanges {
   }
 
   getLinkPath() {
-    const id = this.model()?._id;
-    this.linkPath = id ? (this.isMovie() ? `/movies/${id}` : `/tv-shows/${id}`) : '/';
+    const slug = this.model()?.slug;
+    this.linkPath = slug ? (this.isMovie() ? `/movies/${slug}` : `/tv-shows/${slug}`) : '/';
   }
 
   loadImage() {
