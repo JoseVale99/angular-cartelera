@@ -14,12 +14,12 @@
                 <mat-form-field appearance="fill" class="w-full">
                   <mat-label>Nombre</mat-label>
                   <input matInput formControlName="searchQuery" placeholder="Buscar por nombre">
-                </mat-form-field>
-                @if(searchForm.get('searchQuery')?.hasError('required')) {
+                  @if(searchForm.get('searchQuery')?.hasError('required')){
                   <mat-error>
                     Por favor, ingresa un nombre.
                   </mat-error>
-                }
+                  }
+                </mat-form-field>
               </div>
             }
         </form>
@@ -60,10 +60,9 @@
         <div class="flex flex-col items-center gap-6">
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6">
         
-            @for (content of moviesList; track $index) {
+            @for (content of moviesList; track content._id) {
             <app-poster-card [model]="content" [isMovie]="true" class="w-full"></app-poster-card>
-            }
-            @if (moviesList.length === 0) {
+            }@empty {
             <div class="col-span-full flex flex-col items-center p-8 bg-gray-800 bg-opacity-75 rounded-lg">
               <p class="text-lg md:text-xl text-center">No hay películas disponibles</p>
             </div>
