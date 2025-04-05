@@ -43,4 +43,13 @@ export class MoviesService {
     const $response = this.http.get(this.baseUrl + `search?post_type=movies`, { params }); 
     return lastValueFrom($response);
   }
+
+  /**
+   * Get movie by slug
+   * @param slug
+   */
+  getMovieBySlug(slug: string) {
+    const $response = this.http.get(this.baseUrl + `single?post_name=${slug}&post_type=movies`);
+    return lastValueFrom($response);
+  }
 }
