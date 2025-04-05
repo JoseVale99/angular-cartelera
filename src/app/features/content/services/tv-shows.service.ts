@@ -25,4 +25,12 @@ export class TvShowsService {
     const $response = this.http.get(this.baseUrl + 'listing?post_type=tvshows', { params });
     return lastValueFrom($response);
   }
+
+  /*
+  * Search tv shows
+  */
+  searchTvShows(params: HttpParams) {
+    const $response = this.http.get(this.baseUrl + 'search?post_type=tvshows', { params });
+    return lastValueFrom($response);
+  }
 }
