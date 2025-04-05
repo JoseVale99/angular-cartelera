@@ -1,5 +1,5 @@
 import {Route} from '@angular/router';
-import { ContentMainComponent } from "./content-main/content-main.component";
+import { ContentMainComponent } from "./content.component";
 
 export const CONTENT_ROUTES: Route[] = [
   {path: '',

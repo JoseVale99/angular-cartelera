@@ -1,8 +1,8 @@
 import { Component, inject, signal, ViewChild } from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
-import { PosterCardComponent } from '../../../shared/components/poster-card/poster-card.component';
+import { PosterCardComponent } from '../../shared/components/poster-card/poster-card.component';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MoviesService } from '../services/movies.service';
+import { MoviesService } from './services/movies.service';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +11,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { TvShowsService } from '../services/tv-shows.service';
+import { TvShowsService } from './services/tv-shows.service';
 @Component({
   selector: 'app-content-main',
   imports: [
@@ -24,8 +24,8 @@ import { TvShowsService } from '../services/tv-shows.service';
     MatInputModule,
     ReactiveFormsModule
   ],
-  templateUrl: './content-main.component.html',
-  styleUrl: './content-main.component.css'
+  templateUrl: './content.component.html',
+  styleUrl: './content.component.css'
 })
 export class ContentMainComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
