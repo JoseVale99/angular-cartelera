@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 
 @Injectable({
@@ -15,6 +15,14 @@ export class TvShowsService {
   */
   getSliderTvShows(type: string, listen: string) {
     const $response = this.http.get(this.baseUrl + `sliders?type=${type}&listing=${listen}`);
+    return lastValueFrom($response);
+  }
+
+  /*
+  * Get all tv shows
+  */
+  getAllTvShows(params: HttpParams) {
+    const $response = this.http.get(this.baseUrl + 'listing?post_type=tvshows', { params });
     return lastValueFrom($response);
   }
 }
