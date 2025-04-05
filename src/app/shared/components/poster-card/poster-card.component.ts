@@ -1,5 +1,5 @@
-import { Component, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, input, OnChanges } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 import { CircularProgressComponent } from '../circular-progress/circular-progress.component';
@@ -14,21 +14,30 @@ import { CircularProgressComponent } from '../circular-progress/circular-progres
   templateUrl: './poster-card.component.html',
   styleUrl: './poster-card.component.css'
 })
-export class PosterCardComponent {
+export class PosterCardComponent implements OnChanges {
+  private router = inject(Router);
   model = input<any>();
   isMovie = input<boolean>();
   private readonly baseUrl = environment.urlBase + 'wp-content/uploads';
-  imageUrl: string = '/assets/img/fallback.webp';
+  linkPath: string = '/';
+  imageUrl: string = 'assets/img/fallback.webp';
 
-  ngOnInit() {
-    this.loadImageUrl();
+  ngOnChanges() {
+    this.loadImage();
+    this.getLinkPath();
   }
 
-  loadImageUrl() {
+  getLinkPath() {
+    const id = this.model()?._id;
+    this.linkPath = id ? (this.isMovie() ? `/movies/${id}` : `/tv-shows/${id}`) : '/';
+  }
+
+  loadImage() {
     const uuid = this.model()?.images?.poster;
     this.imageUrl = uuid ? `${this.baseUrl}${uuid}` : '/assets/img/fallback.webp';
   }
-  onImageError(event: Event) {
-    (event.target as HTMLImageElement).src = '/assets/img/fallback.webp';
+
+  onImageError() {
+    this.imageUrl = '/assets/img/fallback.webp';
   }
 }
