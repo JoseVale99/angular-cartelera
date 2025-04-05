@@ -51,7 +51,6 @@ export class DetailComponent {
     try {
       const data = await this.moviesService.getMovieBySlug(slug) as { data: DetailMedia };
       this.dataDetail = data.data;
-      console.log(this.dataDetail);
       await this.loadImage();
       this.isLoading.set(false);
     } catch (error) {
