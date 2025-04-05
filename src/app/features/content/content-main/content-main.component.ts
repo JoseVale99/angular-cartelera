@@ -76,9 +76,18 @@ export class ContentMainComponent {
         this.setHttpParams();
         this.getMovies();
       } else if (type === 'name') {
-        this.searchForm.addControl('searchQuery', this.fb.control('', [Validators.required]));
+        this.searchForm.addControl('searchQuery', this.fb.control('', [Validators.required, Validators.minLength(3)]));
       }
     });
+  }
+
+  setConfigPaginator() {
+    this.matPaginatorIntl.itemsPerPageLabel = 'Películas por página:';
+    this.matPaginatorIntl.nextPageLabel = 'Siguiente';
+    this.matPaginatorIntl.previousPageLabel = 'Anterior';
+    this.matPaginatorIntl.firstPageLabel = 'Primera página';
+    this.matPaginatorIntl.lastPageLabel = 'Última página';
+    this.matPaginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => `${page * pageSize + 1} – ${Math.min((page + 1) * pageSize, length)} de ${length}`;
   }
 
   public async onSearch() {
@@ -86,8 +95,31 @@ export class ContentMainComponent {
       this.searchForm.markAllAsTouched();
       return;
     }
-    if (this.searchForm.get('searchType')?.value === 'name') {
 
+    if (this.searchForm.get('searchType')?.value === 'name') {
+      const query = this.searchForm.get('searchQuery')?.value;
+      this.selectedGenres = [];
+      this.selectedYears = [];
+      this.selectedOrder = 'latest';
+      this.perPage.set(1);
+      this.setPage(0);
+      this.setHttpParams();
+      await this.searchMovies();
+    }
+  }
+
+  async searchMovies() {
+    this.isLoading.set(true);
+    try {
+      const { data } = await this.moviesService.searchMovies(this.httpParams) as any;
+      this.moviesList = data.posts;
+      console.log(this.moviesList);
+      this.totalResults.set(data.pagination.total);
+      this.perPage.set(data.pagination.per_page);
+      this.isLoading.set(false);
+    } catch (error) {
+      console.error(error);
+      this.isLoading.set(false);
     }
   }
 
@@ -99,19 +131,10 @@ export class ContentMainComponent {
 
   setHttpParams() {
     this.httpParams = new HttpParams()
+      .set('query', this.searchForm.get('searchQuery')?.value || '')
       .set('genres', this.selectedGenres.join(',') || '')
       .set('years', this.selectedYears.join(',') || '')
-      .set('order', this.selectedOrder)
-      .set('page', this.perPage());
-  }
-
-  setConfigPaginator() {
-    this.matPaginatorIntl.itemsPerPageLabel = 'Películas por página:';
-    this.matPaginatorIntl.nextPageLabel = 'Siguiente';
-    this.matPaginatorIntl.previousPageLabel = 'Anterior';
-    this.matPaginatorIntl.firstPageLabel = 'Primera página';
-    this.matPaginatorIntl.lastPageLabel = 'Última página';
-    this.matPaginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => `${page * pageSize + 1} – ${Math.min((page + 1) * pageSize, length)} de ${length}`;
+      .set('order', this.selectedOrder);
   }
 
   private async getMovies() {
@@ -139,7 +162,11 @@ export class ContentMainComponent {
       this.perPage.set(currentPage);
       const updatedParams = this.httpParams.set('page', this.perPage());
       this.httpParams = updatedParams;
-      this.getMovies();
+      if(this.searchForm.get('searchType')?.value === 'name') {
+        this.searchMovies();
+      }else{
+        this.getMovies();
+      }
     }
   }
 
