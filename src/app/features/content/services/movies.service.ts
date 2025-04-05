@@ -20,13 +20,9 @@ export class MoviesService {
 
   /**
    *  Get paginated movies
-   * @param page
-   * @param genres
-   * @param years
-   * @param order
+   * @param params
   */
   getAllMovies(params: HttpParams) {
-    //const $response = this.http.get(this.baseUrl + `listing?post_type=movies&page=${page}&genres=${genres}&years=${years}&order=${order}`);
     const $response = this.http.get(this.baseUrl + `listing?post_type=movies`, { params });
     return lastValueFrom($response);
   }
@@ -36,6 +32,15 @@ export class MoviesService {
    */
   getGeneres() {
     const $response = this.http.get<any>(`/generes/generes.json`);
+    return lastValueFrom($response);
+  }
+  
+  /**
+   * Search movies 
+   * @param params
+   */
+  searchMovies(params: HttpParams) {
+    const $response = this.http.get(this.baseUrl + `search?post_type=movies`, { params }); 
     return lastValueFrom($response);
   }
 }
