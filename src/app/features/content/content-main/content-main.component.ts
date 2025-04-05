@@ -184,7 +184,7 @@ export class ContentMainComponent {
 
   filterContent(): void {
     this.setHttpParams();
-    this.getMovies();
+    this.contentType === 'movies' ? this.getMovies() : this.getTvShows();
   }
 
   find(e: PageEvent) {
