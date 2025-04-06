@@ -7,6 +7,7 @@ const dotenv = require('dotenv').config({path: 'src/.env'});
 const envFile = `export const environment = {
     production: ${process.env.production === 'true'},
     urlBase: '${process.env.urlBase}',
+    urlGallery: '${process.env.urlGallery}'
 };
 `;
 
