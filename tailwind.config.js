@@ -10,6 +10,9 @@ module.exports = {
         pulse: 'pulse 1s infinite',
       },
     },
+    lineClamp: {
+      3: '3',
+    },
   },
   plugins: [],
 }
