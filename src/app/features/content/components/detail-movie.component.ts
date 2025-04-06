@@ -3,7 +3,6 @@ import { MoviesService } from '../services/movies.service';
 import { DetailMedia } from '../interfaces/detail.interface';
 import { environment } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
-import { SwiperDirective } from '../../../shared/directives/swiper.directive';
 import { SwiperOptions } from 'swiper/types';
 
 @Component({
