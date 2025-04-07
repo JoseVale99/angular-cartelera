@@ -42,6 +42,8 @@ export class DetailMovieComponent {
   public showFullDescription = false;
   public imageGallery: string[] = [];
   public selectedOption!: string;
+  private videoCache: Map<string, SafeResourceUrl> = new Map();
+
 
   showOptions = false;
 
@@ -125,6 +127,14 @@ export class DetailMovieComponent {
 
   changeVideoPlayer(url: string) {
     this.isLoading.set(true);
+    
+    if (this.videoCache.has(url)) {
+      this.videoUrl = this.videoCache.get(url)!;
+    } else {
+      this.videoUrl = this.sanitizeUrl(url);
+      this.videoCache.set(url, this.videoUrl);
+    }
+
     this.videoUrl = this.sanitizeUrl(url);
     this.selectedOption = url;
     this.showOptions = false;
