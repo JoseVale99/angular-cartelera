@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, signal } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, signal, SimpleChanges } from '@angular/core';
 import { MoviesService } from '../services/movies.service';
 import { DetailMedia } from '../interfaces/detail.interface';
 import { environment } from '../../../../environments/environment';
@@ -7,11 +7,15 @@ import { SwiperOptions } from 'swiper/types';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { VideoSource } from '../interfaces/player-video.interface';
+import { RelatedMedia } from '../interfaces/related.interface';
+import { PosterCardComponent } from '../../../shared/components/poster-card/poster-card.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-detail-movie',
   imports: [
-    DatePipe
+    DatePipe,
+    PosterCardComponent
   ],
   templateUrl: './detail-movie.component.html',
   styleUrl: './detail-movie.component.css',
@@ -31,7 +35,7 @@ import { VideoSource } from '../interfaces/player-video.interface';
 export class DetailMovieComponent {
   private moviesService = inject(MoviesService);
   private domSanitizer = inject(DomSanitizer);
-  public slug = input<string>();
+  private route = inject(ActivatedRoute);
   public genres = input<any[]>();
   public isLoading = signal(false);
   public dataDetail!: DetailMedia;
@@ -43,17 +47,16 @@ export class DetailMovieComponent {
   public imageGallery: string[] = [];
   public selectedOption!: string;
   private videoCache: Map<string, SafeResourceUrl> = new Map();
-
-
+  public relatedMovies: RelatedMedia[] = [];
   showOptions = false;
-
   videoUrl!: SafeResourceUrl;
-
   opciones: VideoSource[] = [];
 
-
-  ngOnInit() {
-    this.getMovieBySlugDetail(this.slug()!);
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const slug = params.get('slug')!;
+      this.getMovieBySlugDetail(slug);
+    });
   }
 
   swiperConfig: SwiperOptions = {
@@ -74,6 +77,7 @@ export class DetailMovieComponent {
       this.imageGallery = this.dataDetail.gallery.split('\n').map(url => url.trim()).filter(trimmedUrl => trimmedUrl).map(trimmedUrl => this.urlGallery + trimmedUrl);
       this.isLoading.set(false);
       this.getUrlsPlayerVideo(this.dataDetail._id);
+      this.getRelatedMovie(this.dataDetail._id);
     } catch (error) {
       console.error(error);
       this.isLoading.set(false);
@@ -87,6 +91,18 @@ export class DetailMovieComponent {
       this.opciones = data.data;
       this.videoUrl = this.sanitizeUrl(this.opciones[0].url);
       this.selectedOption = this.opciones[0].url;
+      this.isLoading.set(false);
+    } catch (error) {
+      console.error(error);
+      this.isLoading.set(false);
+    }
+  }
+
+  private async getRelatedMovie(id: number) {
+    this.isLoading.set(true);
+    try {
+      const data = await this.moviesService.getRelatedMovies(id) as { data: RelatedMedia[] };
+      this.relatedMovies = data.data;
       this.isLoading.set(false);
     } catch (error) {
       console.error(error);

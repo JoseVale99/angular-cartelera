@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MoviesService } from '../services/movies.service';
 import { DetailMovieComponent } from '../components/detail-movie.component';
 
@@ -13,11 +13,9 @@ import { DetailMovieComponent } from '../components/detail-movie.component';
 })
 export class DetailComponent {
   private moviesService = inject(MoviesService);
-  private route = inject(ActivatedRoute);
   private router = inject(Router);
   public contentType! : string;
   public genres: any[] = [];
-  public slug!: string;
 
   constructor() {
     this.contentType = this.router.url.split('/')[1];
@@ -25,7 +23,6 @@ export class DetailComponent {
 
   ngOnInit() {
     this.getAllGeneres();
-    this.slug = this.route.snapshot.paramMap.get('slug')!;
   }
 
   private async getAllGeneres() {
