@@ -1,9 +1,9 @@
-export interface MovieSliderModel {
+export interface MediaSliderModel {
     _id: number;
     title: string;
     overview: string;
     slug: string;
-    images: MovieImage;
+    images: MediaImage;
     trailer: string;
     rating: string;
     genres: number[];
@@ -18,7 +18,7 @@ export interface MovieSliderModel {
     tagline: string;
 }
 
-interface MovieImage {
+interface MediaImage {
     poster: string;
     backdrop: string;
     logo: string;
