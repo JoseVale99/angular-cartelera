@@ -86,10 +86,10 @@
                         </div>
                         @for (opcion of opciones; track opcion) {
                         <div class="bg-[#1f2937] border border-blue-600 rounded-lg p-3 cursor-pointer hover:bg-blue-800"
-                            (click)="changeVideoPlayer(opcion.url)">
+                            (click)="changeVideoPlayer(opcion.url)" [class]="selectedOption === opcion.url ? 'bg-blue-800' : ''">
                             <p class="text-sm font-bold mb-1">{{ dataDetail.title }}</p>
                             <span class="text-xs bg-gray-800 text-white px-2 py-1 rounded mr-2">{{ opcion.lang || 'N/A' }}</span>
-                            <span class="text-xs bg-blue-700 text-white px-2 py-1 rounded">{{ opcion.quality || 'N/A' }}</span>
+                            <span class="text-xs bg-blue-700 text-white px-2 py-1 rounded">{{ opcion.quality || 'N/A' }}</span> 
                         </div>
                         }
             

@@ -41,6 +41,7 @@ export class DetailMovieComponent {
   public urlGallery = environment.urlGallery;
   public showFullDescription = false;
   public imageGallery: string[] = [];
+  public selectedOption!: string;
 
   showOptions = false;
 
@@ -83,6 +84,7 @@ export class DetailMovieComponent {
       const data = await this.moviesService.getUrlsPlayer(id) as { data: VideoSource[] };
       this.opciones = data.data;
       this.videoUrl = this.sanitizeUrl(this.opciones[0].url);
+      this.selectedOption = this.opciones[0].url;
       this.isLoading.set(false);
     } catch (error) {
       console.error(error);
@@ -124,6 +126,7 @@ export class DetailMovieComponent {
   changeVideoPlayer(url: string) {
     this.isLoading.set(true);
     this.videoUrl = this.sanitizeUrl(url);
+    this.selectedOption = url;
     this.showOptions = false;
     this.isLoading.set(false);
   }
