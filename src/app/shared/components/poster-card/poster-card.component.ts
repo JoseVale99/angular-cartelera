@@ -1,5 +1,5 @@
-import { Component, inject, input, OnChanges } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, input, OnChanges } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 import { CircularProgressComponent } from '../circular-progress/circular-progress.component';
@@ -15,7 +15,6 @@ import { CircularProgressComponent } from '../circular-progress/circular-progres
   styleUrl: './poster-card.component.css'
 })
 export class PosterCardComponent implements OnChanges {
-  private router = inject(Router);
   model = input<any>();
   isMovie = input<boolean>();
   private readonly baseUrl = environment.urlBase + 'wp-content/uploads';
