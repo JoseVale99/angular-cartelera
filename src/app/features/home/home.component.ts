@@ -2,13 +2,11 @@ import {  SlicePipe } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
-import { MoviesService } from '../content/services/movies.service';
 import { SwiperDirective } from '../../shared/directives/swiper.directive';
 import { SwiperOptions } from 'swiper/types';
-import { MovieSliderModel } from '../content/interfaces/movie-slider';
+import { MediaSliderModel } from '../content/interfaces/media-slider';
 import { PosterCardComponent } from "../../shared/components/poster-card/poster-card.component";
-import { TvShowSliderModel } from '../content/interfaces/tv-show-slider.interface';
-import { TvShowsService } from '../content/services/tv-shows.service';
+import { MediaService } from '../content/services/media.service';
 @Component({
   selector: 'app-home',
   imports: [
@@ -24,7 +22,14 @@ import { TvShowsService } from '../content/services/tv-shows.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeComponent {
-
+  private mediaService = inject(MediaService);
+  public movieTabList = ['Películas de estreno', 'Películas recén actualizadas'];
+  public moviesList: Array<MediaSliderModel> = [];
+  public selectedMovieTab = 0;
+  public tvShowsTabList = ['Series recén actualizadas'];
+  public tvShowsList: Array<MediaSliderModel> = [];
+  public selectedTVTab = 0;
+  public isLoading = signal(false);
   config: SwiperOptions = {
     watchSlidesProgress: true,
     grabCursor: true,
@@ -40,53 +45,31 @@ export class HomeComponent {
     }
   };
 
-  private moviesService = inject(MoviesService);
-  private tvShowsService = inject(TvShowsService);
-  movieTabList = ['Películas de estreno', 'Películas recén actualizadas'];
-  moviesList: Array<MovieSliderModel> = [];
-  selectedMovieTab = 0;
-  tvShowsTabList = ['Series recén actualizadas'];
-  tvShowsList: Array<TvShowSliderModel> = [];
-  selectedTVTab = 0;
-  public isLoading = signal(false);
-
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.getSliderMovies('0');
-      this.getSliderTvShows('true');
+      this.getSliderMedia('movies', '0');
+      this.getSliderMedia('tvshows', 'true');
     }, 0);
   }
-
-  private async getSliderMovies(type: string) {
-    try {
-      this.isLoading.set(true);
-      const { data } = await this.moviesService.getSliderMovies('movies', type) as { data: MovieSliderModel[] };
-      this.moviesList = data;
-      this.isLoading.set(false);
-    } catch (error) {
-      console.error(error);
-      this.isLoading.set(false);
+  
+    private async getSliderMedia(type: string, listen: string) {
+      try {
+        this.isLoading.set(true);
+        const { data } = await this.mediaService.getSliderMedia(type, listen) as { data: MediaSliderModel[] };
+        type === 'movies' ? this.moviesList = data : this.tvShowsList = data;
+        this.isLoading.set(false);
+      } catch (error) {
+        console.error(error);
+        this.isLoading.set(false);
+      }
     }
-  }
 
   tabMovieChange({ index }: { index: number; }) {
     this.selectedMovieTab = index;
     const movieTypes = ['0', 'true'];
     const selectedType = movieTypes[index];
     if (selectedType) {
-      this.getSliderMovies(selectedType);
-    }
-  }
-
-  private async getSliderTvShows(type: string) {
-    try {
-      this.isLoading.set(true);
-      const { data } = await this.tvShowsService.getSliderTvShows('tvshows', type) as { data: TvShowSliderModel[] };
-      this.tvShowsList = data;
-      this.isLoading.set(false);
-    } catch (error) {
-      console.error(error);
-      this.isLoading.set(false);
+      this.getSliderMedia('movies', selectedType);
     }
   }
 
@@ -95,7 +78,7 @@ export class HomeComponent {
     const tvShowTypes = ['true'];
     const selectedType = tvShowTypes[index];
     if (selectedType) {
-      this.getSliderTvShows(selectedType);
+      this.getSliderMedia('tvshows', selectedType);
     }
   }
 }
