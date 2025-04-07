@@ -2,9 +2,9 @@
     <!-- Logo centered below the content -->
      @if(this.logoUrl) {
      <div class="flex justify-center mt-8">
-        <div class="flex-shrink-0 w-40 md:w-52 lg:w-64 xl:w-80 rounded overflow-hidden shadow-xl transition-transform duration-300 ease-in-out transform hover:scale-105">
+        <div class="flex-shrink-0 w-40 md:w-52 lg:w-64 xl:w-80 rounded overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105">
             <img [src]="logoUrl" (error)="onImageErrorLogo()" [alt]="dataDetail.title + ' Logo'" 
-                class="w-full h-auto rounded-xl object-cover shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out" />
+                class="w-full h-auto rounded-xl object-cover transition-shadow duration-300 ease-in-out" />
         </div>
      </div>
      }
@@ -33,7 +33,7 @@
                 <p class="text-sm md:text-base leading-relaxed text-gray-300 max-w-2xl transition-all duration-300 ease-in-out overflow-hidden"
                     [class.line-clamp-3]="!showFullDescription" [innerHTML]="dataDetail.overview">
                 </p>
-                @if(dataDetail.overview.length > 180){
+                @if(dataDetail.overview.length > 100){
                 <button class="mt-2 text-blue-400 hover:text-blue-300 text-sm font-medium"
                     (click)="showFullDescription = !showFullDescription">
                     {{ showFullDescription ? 'Ver menos' : 'Ver más' }}
@@ -71,12 +71,19 @@
             
                 <!-- Video player -->
                 <div class="aspect-w-16 aspect-h-9 bg-black rounded-xl overflow-hidden shadow-2xl">
-                    @if(videoUrl) {
-                    <iframe [src]="videoUrl" class="w-full h-[500px]" frameborder="0" allowfullscreen
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
-                    </iframe>
+                    @defer (on immediate) {
+                        @if(videoUrl) {
+                            <div class="w-full h-[500px]">
+                                <iframe [src]="videoUrl" class="w-full h-full" frameborder="0" allowfullscreen
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
+                                </iframe>
+                            </div>
+                        }
+                    } @placeholder(minimum 500ms) {
+                        <div class="flex items-center justify-center w-full h-[500px]">
+                            <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+                        </div>
                     }
-            
                     <!-- Panel deslizante -->
                     @if(showOptions) {
                     <div @slideInOut class="absolute top-0 left-0 w-full h-full bg-[#111827]/95 text-white z-20 overflow-y-auto p-4 rounded-xl space-y-4">

@@ -127,15 +127,12 @@ export class DetailMovieComponent {
 
   changeVideoPlayer(url: string) {
     this.isLoading.set(true);
-    
     if (this.videoCache.has(url)) {
       this.videoUrl = this.videoCache.get(url)!;
     } else {
       this.videoUrl = this.sanitizeUrl(url);
       this.videoCache.set(url, this.videoUrl);
     }
-
-    this.videoUrl = this.sanitizeUrl(url);
     this.selectedOption = url;
     this.showOptions = false;
     this.isLoading.set(false);
