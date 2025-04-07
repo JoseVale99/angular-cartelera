@@ -61,4 +61,13 @@ export class MoviesService {
     const $response = this.http.get(this.baseUrl + `player?post_id=${id}`);
     return lastValueFrom($response);
   }
+
+  /**
+   *  Get related movies
+   * @param id
+   */
+  getRelatedMovies(id: number) {
+    const $response = this.http.get(this.baseUrl + `related?post_id=${id}&post_type=movies`);
+    return lastValueFrom($response);
+  }
 }
