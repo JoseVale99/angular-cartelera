@@ -52,4 +52,13 @@ export class MoviesService {
     const $response = this.http.get(this.baseUrl + `single?post_name=${slug}&post_type=movies`);
     return lastValueFrom($response);
   }
+
+  /**
+   * Get player
+   * @param id
+   */
+  getUrlsPlayer(id: number) {
+    const $response = this.http.get(this.baseUrl + `player?post_id=${id}`);
+    return lastValueFrom($response);
+  }
 }
