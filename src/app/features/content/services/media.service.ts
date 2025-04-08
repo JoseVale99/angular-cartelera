@@ -45,11 +45,11 @@ export class MediaService {
   }
 
   /**
-   * Get movie by slug
+   * Get media by slug
    * @param slug
    */
-  getMovieBySlug(slug: string) {
-    const $response = this.http.get(this.baseUrl + `single?post_name=${slug}&post_type=movies`);
+  getMediaBySlug(slug: string, type: string) {
+    const $response = this.http.get(this.baseUrl + `single?post_name=${slug}&post_type=${type}`);
     return lastValueFrom($response);
   }
 
@@ -63,11 +63,11 @@ export class MediaService {
   }
 
   /**
-   *  Get related movies
+   *  Get related media
    * @param id
    */
-  getRelatedMovies(id: number) {
-    const $response = this.http.get(this.baseUrl + `related?post_id=${id}&post_type=movies`);
+  getRelatedMedia(id: number, type: string) {
+    const $response = this.http.get(this.baseUrl + `related?post_id=${id}&post_type=${type}`);
     return lastValueFrom($response);
   }
 }
