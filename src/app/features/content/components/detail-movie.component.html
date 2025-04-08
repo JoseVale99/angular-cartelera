@@ -33,7 +33,7 @@
                 <p class="text-sm md:text-base leading-relaxed text-gray-300 max-w-2xl transition-all duration-300 ease-in-out overflow-hidden"
                     [class.line-clamp-3]="!showFullDescription" [innerHTML]="dataDetail.overview">
                 </p>
-                @if(dataDetail.overview.length > 100){
+                @if(dataDetail.overview.length > 130){
                 <button class="mt-2 text-blue-400 hover:text-blue-300 text-sm font-medium"
                     (click)="showFullDescription = !showFullDescription">
                     {{ showFullDescription ? 'Ver menos' : 'Ver más' }}
@@ -79,7 +79,7 @@
                                 </iframe>
                             </div>
                         }
-                    } @placeholder(minimum 500ms) {
+                    } @placeholder(minimum 800ms) {
                         <div class="flex items-center justify-center w-full h-[500px]">
                             <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
                         </div>
