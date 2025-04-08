@@ -2,7 +2,6 @@ import { Component, inject, signal, ViewChild } from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import { PosterCardComponent } from '../../shared/components/poster-card/poster-card.component';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MoviesService } from './services/movies.service';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +10,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { TvShowsService } from './services/tv-shows.service';
+import { MediaService } from './services/media.service';
 @Component({
   selector: 'app-content-main',
   imports: [
@@ -29,14 +28,12 @@ import { TvShowsService } from './services/tv-shows.service';
 })
 export class ContentMainComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  private moviesService = inject(MoviesService);
-  private tvShowsService = inject(TvShowsService);
+  private mediaService = inject(MediaService);
   private matPaginatorIntl = inject(MatPaginatorIntl);
   private router = inject(Router);
   private fb = inject(FormBuilder);
   public isLoading = signal(false);
-  moviesList: any[] = [];
-  tvShowsList: any[] = [];
+  mediaList: any[] = [];
   totalResults = signal(0);
   perPage = signal(1);
   httpParams = new HttpParams();
@@ -56,13 +53,8 @@ export class ContentMainComponent {
   ngOnInit(): void {
     this.setConfigPaginator();
     this.getGeneres();
-    if (this.contentType === 'movies') {
-      this.setHttpParams();
-      this.getMovies();
-    } else if (this.contentType === 'tv-shows') {
-      this.setHttpParams();
-      this.getTvShows();
-    }
+   this.setHttpParams();
+   this.getMedia();
   }
 
   crearFormulario() {
@@ -79,7 +71,7 @@ export class ContentMainComponent {
         this.perPage.set(1);
         this.setPage(0);
         this.setHttpParams();
-        this.contentType === 'movies' ? this.getMovies() : this.getTvShows();
+        this.getMedia();
       } else if (type === 'name') {
         this.searchForm.addControl('searchQuery', this.fb.control('', [Validators.required, Validators.minLength(3)]));
       }
@@ -108,29 +100,15 @@ export class ContentMainComponent {
       this.perPage.set(1);
       this.setPage(0);
       this.setHttpParams();
-      this.contentType === 'movies' ? await this.searchMovies() : await this.searchTvShows();
+      await this.searchMedia();
     }
   }
 
-  async searchMovies() {
+  private async searchMedia() {
     this.isLoading.set(true);
     try {
-      const { data } = await this.moviesService.searchMovies(this.httpParams) as any;
-      this.moviesList = data.posts;
-      this.totalResults.set(data.pagination.total);
-      this.perPage.set(data.pagination.per_page);
-      this.isLoading.set(false);
-    } catch (error) {
-      console.error(error);
-      this.isLoading.set(false);
-    }
-  }
-
-  async searchTvShows() {
-    this.isLoading.set(true);
-    try {
-      const { data } = await this.tvShowsService.searchTvShows(this.httpParams) as any;
-      this.tvShowsList = data.posts;
+      const { data } = await this.mediaService.searchMedia(this.httpParams) as any;
+      this.mediaList = data.posts;
       this.totalResults.set(data.pagination.total);
       this.perPage.set(data.pagination.per_page);
       this.isLoading.set(false);
@@ -141,7 +119,7 @@ export class ContentMainComponent {
   }
 
   private async getGeneres() {
-    const data = await this.moviesService.getGeneres() as any;
+    const data = await this.mediaService.getGeneres() as any;
     this.genres = data.data.genres;
     this.years = data.data.years;
   }
@@ -149,30 +127,17 @@ export class ContentMainComponent {
   setHttpParams() {
     this.httpParams = new HttpParams()
       .set('query', this.searchForm.get('searchQuery')?.value || '')
+      .set('post_type', this.contentType)
       .set('genres', this.selectedGenres.join(',') || '')
       .set('years', this.selectedYears.join(',') || '')
       .set('order', this.selectedOrder);
   }
 
-  private async getMovies() {
+  private async getMedia() {
     this.isLoading.set(true);
     try {
-      const { data } = await this.moviesService.getAllMovies(this.httpParams) as any;
-      this.moviesList = data.posts;
-      this.totalResults.set(data.pagination.total);
-      this.perPage.set(data.pagination.per_page);
-      this.isLoading.set(false);
-    } catch (error) {
-      console.error(error);
-      this.isLoading.set(false);
-    }
-  }
-
-  private async getTvShows() {
-    this.isLoading.set(true);
-    try {
-      const { data } = await this.tvShowsService.getAllTvShows(this.httpParams) as any;
-      this.tvShowsList = data.posts;
+      const { data } = await this.mediaService.getAllMedia(this.httpParams) as any;
+      this.mediaList = data.posts;
       this.totalResults.set(data.pagination.total);
       this.perPage.set(data.pagination.per_page);
       this.isLoading.set(false);
@@ -184,7 +149,7 @@ export class ContentMainComponent {
 
   filterContent(): void {
     this.setHttpParams();
-    this.contentType === 'movies' ? this.getMovies() : this.getTvShows();
+    this.getMedia();
   }
 
   find(e: PageEvent) {
@@ -194,9 +159,9 @@ export class ContentMainComponent {
       const updatedParams = this.httpParams.set('page', this.perPage());
       this.httpParams = updatedParams;
       if(this.contentType === 'movies'){
-        this.searchForm.get('searchType')?.value === 'name' ? this.searchMovies() : this.getMovies();
-      }else if(this.contentType === 'tv-shows'){
-        this.searchForm.get('searchType')?.value === 'name' ? this.searchTvShows() : this.getTvShows();
+        this.searchForm.get('searchType')?.value === 'name' && this.searchForm.get('searchQuery')?.value ? this.searchMedia() : this.getMedia();
+      }else if(this.contentType === 'tvshows'){
+        this.searchForm.get('searchType')?.value === 'name' && this.searchForm.get('searchQuery')?.value ? this.searchMedia() : this.getMedia();
       }
     }
   }
