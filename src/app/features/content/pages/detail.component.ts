@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MoviesService } from '../services/movies.service';
 import { DetailMovieComponent } from '../components/detail-movie.component';
+import { MediaService } from '../services/media.service';
 
 @Component({
   selector: 'app-detail',
@@ -12,7 +12,7 @@ import { DetailMovieComponent } from '../components/detail-movie.component';
   styleUrl: './detail.component.css'
 })
 export class DetailComponent {
-  private moviesService = inject(MoviesService);
+  private mediaService = inject(MediaService);
   private router = inject(Router);
   public contentType! : string;
   public genres: any[] = [];
@@ -26,7 +26,7 @@ export class DetailComponent {
   }
 
   private async getAllGeneres() {
-    const data = await this.moviesService.getGeneres() as any;
+    const data = await this.mediaService.getGeneres() as any;
     this.genres = data.data.genres;
   }
 }

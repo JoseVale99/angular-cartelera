@@ -1,5 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, signal, SimpleChanges } from '@angular/core';
-import { MoviesService } from '../services/movies.service';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, signal } from '@angular/core';
 import { DetailMedia } from '../interfaces/detail.interface';
 import { environment } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
@@ -10,6 +9,7 @@ import { VideoSource } from '../interfaces/player-video.interface';
 import { RelatedMedia } from '../interfaces/related.interface';
 import { PosterCardComponent } from '../../../shared/components/poster-card/poster-card.component';
 import { ActivatedRoute } from '@angular/router';
+import { MediaService } from '../services/media.service';
 
 @Component({
   selector: 'app-detail-movie',
@@ -33,7 +33,8 @@ import { ActivatedRoute } from '@angular/router';
   ]
 })
 export class DetailMovieComponent {
-  private moviesService = inject(MoviesService);
+  public type = input<string>();
+  private mediaService = inject(MediaService);
   private domSanitizer = inject(DomSanitizer);
   private route = inject(ActivatedRoute);
   public genres = input<any[]>();
@@ -70,7 +71,7 @@ export class DetailMovieComponent {
   private async getMovieBySlugDetail(slug: string) {
     this.isLoading.set(true);
     try {
-      const data = await this.moviesService.getMovieBySlug(slug) as { data: DetailMedia };
+      const data = await this.mediaService.getMediaBySlug(slug, this.type()!) as { data: DetailMedia };
       this.dataDetail = data.data;
       this.logoUrl = this.loadImage(this.dataDetail.images?.logo);
       this.imageUrl = this.loadImage(this.dataDetail.images?.poster);
@@ -87,7 +88,7 @@ export class DetailMovieComponent {
   private async getUrlsPlayerVideo(id: number) {
     this.isLoading.set(true);
     try {
-      const data = await this.moviesService.getUrlsPlayer(id) as { data: VideoSource[] };
+      const data = await this.mediaService.getUrlsPlayer(id) as { data: VideoSource[] };
       this.opciones = data.data;
       this.videoUrl = this.sanitizeUrl(this.opciones[0].url);
       this.selectedOption = this.opciones[0].url;
@@ -101,7 +102,7 @@ export class DetailMovieComponent {
   private async getRelatedMovie(id: number) {
     this.isLoading.set(true);
     try {
-      const data = await this.moviesService.getRelatedMovies(id) as { data: RelatedMedia[] };
+      const data = await this.mediaService.getRelatedMedia(id, this.type()!) as { data: RelatedMedia[] };
       this.relatedMovies = data.data;
       this.isLoading.set(false);
     } catch (error) {
