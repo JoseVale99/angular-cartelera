@@ -19,11 +19,11 @@ export class MediaService {
   }
 
   /**
-   *  Get paginated movies
+   *  Get media by type
    * @param params
   */
-  getAllMovies(params: HttpParams) {
-    const $response = this.http.get(this.baseUrl + `listing?post_type=movies`, { params });
+  getAllMedia(params: HttpParams) {
+    const $response = this.http.get(this.baseUrl + `listing`, { params });
     return lastValueFrom($response);
   }
 
@@ -36,11 +36,11 @@ export class MediaService {
   }
   
   /**
-   * Search movies 
+   * Search media 
    * @param params
    */
-  searchMovies(params: HttpParams) {
-    const $response = this.http.get(this.baseUrl + `search?post_type=movies`, { params }); 
+  searchMedia(params: HttpParams) {
+    const $response = this.http.get(this.baseUrl + `search`, { params }); 
     return lastValueFrom($response);
   }
 
