@@ -28,7 +28,7 @@ export class PosterCardComponent implements OnChanges {
 
   getLinkPath() {
     const slug = this.model()?.slug;
-    this.linkPath = slug ? (this.isMovie() ? `/movies/${slug}` : `/tv-shows/${slug}`) : '/';
+    this.linkPath = slug ? (this.isMovie() ? `/movies/${slug}` : `/tvshows/${slug}`) : '/';
   }
 
   loadImage() {
