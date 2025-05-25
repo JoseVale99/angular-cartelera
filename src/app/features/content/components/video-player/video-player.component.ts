@@ -2,12 +2,24 @@ import { Component, inject, input, signal } from '@angular/core';
 import { VideoSource } from '../../interfaces/player-video.interface';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MediaService } from '../../services/media.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-video-player',
   imports: [],
   templateUrl: './video-player.component.html',
-  styles: ``
+  styles: ``,
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)', opacity: 0 }),
+        animate('300ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in-out', style({ transform: 'translateX(-100%)', opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class VideoPlayerComponent {
   public idPost = input.required<number>();
