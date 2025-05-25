@@ -1,22 +1,23 @@
 import { DatePipe } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DetailMedia } from '../../interfaces/detail.interface';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { environment } from '../../../../../environments/environment';
-import { SwiperOptions } from 'swiper/types';
-import { RelatedMedia } from '../../interfaces/related.interface';
-import { VideoSource } from '../../interfaces/player-video.interface';
-import { MediaService } from '../../services/media.service';
 import { PosterCardComponent } from '../../../../shared/components/poster-card/poster-card.component';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SwiperOptions } from 'swiper/types';
+import { VideoSource } from '../../interfaces/player-video.interface';
+import { DetailMedia } from '../../interfaces/detail.interface';
+import { RelatedMedia } from '../../interfaces/related.interface';
+import { MediaService } from '../../services/media.service';
 
 @Component({
-  selector: 'app-detail-movie',
-  imports: [    
+  selector: 'app-detail-media',
+  imports: [
     DatePipe,
-    PosterCardComponent],
-  templateUrl: './detail-movie.component.html',
+    PosterCardComponent
+  ],
+  templateUrl: './detail-media.component.html',
   styles: ``,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   animations: [
@@ -31,7 +32,7 @@ import { PosterCardComponent } from '../../../../shared/components/poster-card/p
     ])
   ]
 })
-export class DetailMovieComponent {
+export class DetailMediaComponent {
   public type = input<string>();
   private mediaService = inject(MediaService);
   private domSanitizer = inject(DomSanitizer);
