@@ -71,7 +71,9 @@ export class DetailMediaComponent {
     try {
       const data = await this.mediaService.getMediaBySlug(slug, this.type()!) as { data: DetailMedia };
       this.dataDetail = data.data;
-      this.imageGallery = this.dataDetail.gallery.split('\n').map(url => url.trim()).filter(trimmedUrl => trimmedUrl).map(trimmedUrl => this.urlGallery + trimmedUrl);
+      this.imageGallery = this.dataDetail.gallery.split('\n').map(url => url.trim()).filter(
+        trimmedUrl => trimmedUrl).map(trimmedUrl => this.urlGallery + trimmedUrl
+        );
       this.isLoading.set(false);
       if(data?.data?.type ==="tvshows"){
         this.getEpisodes(this.dataDetail._id)

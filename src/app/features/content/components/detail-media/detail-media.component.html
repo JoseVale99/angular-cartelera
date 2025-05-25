@@ -116,7 +116,7 @@
                 </h2>
                 <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
                     @for (movie of relatedMovies; track $index) {
-                        <app-poster-card [model]="movie" [isMovie]="true"></app-poster-card>
+                        <app-poster-card [model]="movie" [isMovie]="dataDetail.type ==='movies'"></app-poster-card>
                     }
                 </div>
             </div>
