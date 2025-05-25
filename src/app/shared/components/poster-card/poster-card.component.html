@@ -1,20 +1,27 @@
 @defer (on immediate) {
-  <div class="flex flex-col mt-8  items-start bg-white shadow-lg rounded-2xl overflow-hidden transform transition-transform hover:scale-105 group">
-    <div class="relative w-full h-full cursor-pointer" [routerLink]="linkPath">
-        <app-circular-progress [rating]="model()?.rating"></app-circular-progress>
-        <img class="w-full h-full object-cover rounded-t select-none transition-transform duration-400 min-h-[135px] group-hover:scale-110"
-        [src]="imageUrl" (error)="onImageError()" [alt]="model()?.title || model()?.name">
-        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-1 group-hover:text-blue-600">
-          <a [title]="model()?.title || model()?.name" class="font-semibold text-base transition-colors duration-300 ease-in-out">
-            {{ model()?.title || model()?.name }}
-          </a>
-          <p class="text-sm text-gray-300 mt-1">
-            {{ model()?.release_date | date:'d MMMM, yyyy' }}
-          </p>
-        </div>
+  <div class="flex flex-col mt-8 items-start bg-white shadow-lg rounded-2xl overflow-hidden transform transition-transform hover:scale-105 group">
+    <div class="relative w-full h-full cursor-pointer" [routerLink]="linkPath()">
+      <app-circular-progress [rating]="model()?.rating"></app-circular-progress>
+
+      <img
+        class="w-full h-full object-cover rounded-t select-none transition-transform duration-400 min-h-[135px] group-hover:scale-110"
+        [src]="displayedImageUrl()"
+        (error)="onImageError()"
+        [alt]="model()?.title || model()?.name"
+      >
+
+      <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-1 group-hover:text-blue-600">
+        <a [title]="model()?.title || model()?.name" class="font-semibold text-base transition-colors duration-300 ease-in-out">
+          {{ model()?.title || model()?.name }}
+        </a>
+        <p class="text-sm text-gray-300 mt-1">
+          {{ model()?.release_date | date:'d MMMM, yyyy' }}
+        </p>
+      </div>
     </div>
   </div>
-}@placeholder (minimum 650ms){
+}
+@placeholder (minimum 650ms){
   <div class="flex flex-col mt-8 items-start bg-white shadow-lg rounded-2xl overflow-hidden transform transition-transform hover:scale-105 group animate-pulse">
     <div class="relative h-[200px] bg-gray-300 w-[200px]"></div>
     <div class="w-full bg-black bg-opacity-70 text-white p-2">
@@ -22,4 +29,4 @@
       <div class="h-3 bg-gray-400 rounded w-1/2"></div>
     </div>
   </div> 
-} 
+}
