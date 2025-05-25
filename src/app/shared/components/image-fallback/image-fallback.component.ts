@@ -5,7 +5,9 @@ import { environment } from '../../../../environments/environment';
   selector: 'app-image-fallback',
   standalone: true,
   template: `
-    <img  [src]="currentSrc()" [alt]="alt()" [class]="imgClass()" (error)="handleError()"/>
+  @if(!shouldHideImage()){
+      <img [src]="currentSrc()" [alt]="alt()" [class]="imgClass()" (error)="handleError()" />
+    }
   `
 })
 export class ImageFallbackComponent {
@@ -14,8 +16,9 @@ export class ImageFallbackComponent {
   fallback = input('/assets/img/fallback.webp');
   alt = input('Imagen');
   imgClass = input('object-cover w-full h-auto rounded-xl');
+  hideOnError = input(false);
   private currentErrorUrl = signal<string | null>(null);
-  
+
   private baseUrlDefault = environment.urlBase + 'wp-content/uploads';
   private baseUrlEpisodes = 'https://image.tmdb.org/t/p/w780';
 
@@ -29,6 +32,11 @@ export class ImageFallbackComponent {
   currentSrc = computed(() => {
     const url = this.fullUrl();
     return this.currentErrorUrl() === url ? this.fallback() : url;
+  });
+
+  shouldHideImage = computed(() => {
+    const url = this.fullUrl();
+    return this.hideOnError() && this.currentErrorUrl() === url;
   });
 
   handleError() {
