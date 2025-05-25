@@ -16,4 +16,5 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class NavLinksComponent {
   link = input.required<string>();
   label = input.required<string>();
+  exact= input<boolean>(false);
 }

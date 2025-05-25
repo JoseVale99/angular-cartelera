@@ -10,7 +10,7 @@
     </a>
 
     <div class="items-center space-x-8 hidden md:flex">
-      <app-nav-links link="/" label="Inicio"></app-nav-links>
+      <app-nav-links link="/" label="Inicio" [exact]="true"></app-nav-links>
       <app-nav-links link="/movies" label="Películas"></app-nav-links>
       <app-nav-links link="/tvshows" label="Series"></app-nav-links>
 
@@ -45,7 +45,7 @@
     </div>
 
     <div class="flex flex-col space-y-4 px-6">
-      <app-nav-links link="/" label="Inicio" (click)="toggleMenu()"></app-nav-links>
+      <app-nav-links link="/" label="Inicio" (click)="toggleMenu()" [exact]="true"></app-nav-links>
       <app-nav-links link="/movies" label="Películas" (click)="toggleMenu()"></app-nav-links>
       <app-nav-links link="/tvshows" label="Series" (click)="toggleMenu()"></app-nav-links>
 

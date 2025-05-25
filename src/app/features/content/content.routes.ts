@@ -6,7 +6,7 @@ export const CONTENT_ROUTES: Route[] = [
   {path: '',
     children: [
       { path: '', component: ContentMainComponent},
-     { path: ':slug', component: DetailComponent}
+      { path: ':slug', component: DetailComponent}
     ]},
 ];
 

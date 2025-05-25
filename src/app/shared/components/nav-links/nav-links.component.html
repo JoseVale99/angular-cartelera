@@ -1,5 +1,5 @@
 <a mat-button [routerLink]="link()" routerLinkActive="activated-route"
-  #rla="routerLinkActive" [routerLinkActiveOptions]="{ exact: true }"
+  #rla="routerLinkActive" [routerLinkActiveOptions]="{ exact: exact() }"
   [class]=" rla.isActive 
     ? '!rounded-none !last:mr-[15px] !text-white !border-0 !border-b-2 !border-solid !border-current' 
     : '!rounded-none !last:mr-[15px] !text-white !border-0'">
