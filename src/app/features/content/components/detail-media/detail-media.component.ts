@@ -1,57 +1,55 @@
-import { DatePipe } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, signal } from '@angular/core';
+import { Component, computed, CUSTOM_ELEMENTS_SCHEMA, inject, input, signal } from '@angular/core';
 import { PosterCardComponent } from '../../../../shared/components/poster-card/poster-card.component';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { environment } from '../../../../../environments/environment';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SwiperOptions } from 'swiper/types';
-import { VideoSource } from '../../interfaces/player-video.interface';
 import { DetailMedia } from '../../interfaces/detail.interface';
 import { RelatedMedia } from '../../interfaces/related.interface';
 import { MediaService } from '../../services/media.service';
+import { Episode } from '../../interfaces/episodes.interface';
+import { VideoPlayerComponent } from "../video-player/video-player.component";
+import { ImageFallbackComponent } from '../../../../shared/components/image-fallback/image-fallback.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-detail-media',
   imports: [
     DatePipe,
-    PosterCardComponent
-  ],
+    PosterCardComponent,
+    VideoPlayerComponent,
+    ImageFallbackComponent,
+    MatSelectModule,
+    FormsModule,
+    MatFormFieldModule
+],
   templateUrl: './detail-media.component.html',
   styles: ``,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  animations: [
-    trigger('slideInOut', [
-      transition(':enter', [
-        style({ transform: 'translateX(-100%)', opacity: 0 }),
-        animate('300ms ease-in-out', style({ transform: 'translateX(0)', opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('300ms ease-in-out', style({ transform: 'translateX(-100%)', opacity: 0 }))
-      ])
-    ])
-  ]
 })
 export class DetailMediaComponent {
   public type = input<string>();
   private mediaService = inject(MediaService);
-  private domSanitizer = inject(DomSanitizer);
   private route = inject(ActivatedRoute);
   public genres = input<any[]>();
   public isLoading = signal(false);
   public dataDetail!: DetailMedia;
-  public imageUrl!: string;
-  public logoUrl!: string;
-  private readonly baseUrl = environment.urlBase + 'wp-content/uploads';
   public urlGallery = environment.urlGallery;
   public showFullDescription = false;
   public imageGallery: string[] = [];
   public selectedOption!: string;
-  private videoCache: Map<string, SafeResourceUrl> = new Map();
   public relatedMovies: RelatedMedia[] = [];
-  showOptions = false;
-  videoUrl!: SafeResourceUrl;
-  opciones: VideoSource[] = [];
+  public  episodes = signal<Episode[]>([]);
+  seasons: number[] = [];
+  selectedSeason = signal<number | null>(null);
+  public  filteredEpisodes = computed(() => {
+    const season = this.selectedSeason();
+    const allEpisodes = this.episodes();
+    if (season === null) return [];
+    return allEpisodes.filter(e => e.season_number === season).sort((a, b) => a.episode_number - b.episode_number);
+  });
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -73,11 +71,11 @@ export class DetailMediaComponent {
     try {
       const data = await this.mediaService.getMediaBySlug(slug, this.type()!) as { data: DetailMedia };
       this.dataDetail = data.data;
-      this.logoUrl = this.loadImage(this.dataDetail.images?.logo);
-      this.imageUrl = this.loadImage(this.dataDetail.images?.poster);
       this.imageGallery = this.dataDetail.gallery.split('\n').map(url => url.trim()).filter(trimmedUrl => trimmedUrl).map(trimmedUrl => this.urlGallery + trimmedUrl);
       this.isLoading.set(false);
-      this.getUrlsPlayerVideo(this.dataDetail._id);
+      if(data?.data?.type ==="tvshows"){
+        this.getEpisodes(this.dataDetail._id)
+      }
       this.getRelatedMovie(this.dataDetail._id);
     } catch (error) {
       console.error(error);
@@ -85,18 +83,25 @@ export class DetailMediaComponent {
     }
   }
 
-  private async getUrlsPlayerVideo(id: number) {
+  private async getEpisodes(id: number){
     this.isLoading.set(true);
     try {
-      const data = await this.mediaService.getUrlsPlayer(id) as { data: VideoSource[] };
-      this.opciones = data.data;
-      this.videoUrl = this.sanitizeUrl(this.opciones[0].url);
-      this.selectedOption = this.opciones[0].url;
+      const data = await this.mediaService.getEpisodes(id) as { data: Episode[] };
+      this.episodes.set(data.data)
       this.isLoading.set(false);
+      const seasonTvShows = new Set(data.data.map(e => e.season_number));
+      this.seasons = Array.from(seasonTvShows).sort((a, b) => a - b);
+      this.selectedSeason.set(this.seasons[0]);
     } catch (error) {
       console.error(error);
       this.isLoading.set(false);
     }
+  }
+  
+
+  playEpisode(episode: any) {
+    console.log("Reproduciendo:", episode.title);
+    // Aquí puedes redirigir o abrir el reproductor
   }
 
   private async getRelatedMovie(id: number) {
@@ -111,18 +116,6 @@ export class DetailMediaComponent {
     }
   }
 
-  private loadImage(uuid: string) {
-    return `${this.baseUrl}${uuid}`;
-  }
-
-  onImageError() {
-    this.imageUrl = '/assets/img/fallback.webp';
-  }
-
-  onImageErrorLogo() {
-    this.logoUrl = '';
-  }
-
   getGenreName(id: number): string {
     return this.genres()?.find(genre => genre.id === id)?.name || '';
   }
@@ -132,26 +125,5 @@ export class DetailMediaComponent {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = Math.round(totalMinutes % 60);
     return `${hours}h ${minutes}m`;
-  }
-
-  sanitizeUrl(url: string): SafeResourceUrl {
-    return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-
-  toggleOptions() {
-    this.showOptions = !this.showOptions;
-  }
-
-  changeVideoPlayer(url: string) {
-    this.isLoading.set(true);
-    if (this.videoCache.has(url)) {
-      this.videoUrl = this.videoCache.get(url)!;
-    } else {
-      this.videoUrl = this.sanitizeUrl(url);
-      this.videoCache.set(url, this.videoUrl);
-    }
-    this.selectedOption = url;
-    this.showOptions = false;
-    this.isLoading.set(false);
   }
 }
