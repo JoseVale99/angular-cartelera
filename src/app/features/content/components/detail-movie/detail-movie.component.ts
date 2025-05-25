@@ -1,24 +1,23 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, signal } from '@angular/core';
-import { DetailMedia } from '../interfaces/detail.interface';
-import { environment } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
-import { SwiperOptions } from 'swiper/types';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { VideoSource } from '../interfaces/player-video.interface';
-import { RelatedMedia } from '../interfaces/related.interface';
-import { PosterCardComponent } from '../../../shared/components/poster-card/poster-card.component';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, input, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MediaService } from '../services/media.service';
+import { DetailMedia } from '../../interfaces/detail.interface';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { environment } from '../../../../../environments/environment';
+import { SwiperOptions } from 'swiper/types';
+import { RelatedMedia } from '../../interfaces/related.interface';
+import { VideoSource } from '../../interfaces/player-video.interface';
+import { MediaService } from '../../services/media.service';
+import { PosterCardComponent } from '../../../../shared/components/poster-card/poster-card.component';
 
 @Component({
   selector: 'app-detail-movie',
-  imports: [
+  imports: [    
     DatePipe,
-    PosterCardComponent
-  ],
+    PosterCardComponent],
   templateUrl: './detail-movie.component.html',
-  styleUrl: './detail-movie.component.css',
+  styles: ``,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   animations: [
     trigger('slideInOut', [

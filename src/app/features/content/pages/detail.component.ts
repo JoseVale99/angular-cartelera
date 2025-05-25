@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { DetailMovieComponent } from '../components/detail-movie.component';
 import { MediaService } from '../services/media.service';
+import { DetailMovieComponent } from '../components/detail-movie/detail-movie.component';
 
 @Component({
   selector: 'app-detail',
