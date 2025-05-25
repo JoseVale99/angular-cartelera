@@ -20,7 +20,7 @@ export class ImageFallbackComponent {
   alt = input('Imagen');
   imgClass = input('object-cover w-full h-auto rounded-xl');
   private hasError = signal(false);
-  private baseUrlDefault = environment.urlBase + 'wp-content/uploads/';
+  private baseUrlDefault = environment.urlBase + 'wp-content/uploads';
   private baseUrlEpisodes = 'https://image.tmdb.org/t/p/w780';
 
   private fullUrl = computed(() => {
