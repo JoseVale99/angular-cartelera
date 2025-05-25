@@ -2,12 +2,14 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MediaService } from '../services/media.service';
 import { DetailMovieComponent } from '../components/detail-movie/detail-movie.component';
+import { DetailTvShowsComponent } from '../components/detail-tv-shows/detail-tv-shows.component';
 
 @Component({
   selector: 'app-detail',
   imports: [
-    DetailMovieComponent
-  ],
+    DetailMovieComponent,
+    DetailTvShowsComponent
+],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.css'
 })
