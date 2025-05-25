@@ -70,4 +70,12 @@ export class MediaService {
     const $response = this.http.get(this.baseUrl + `related?post_id=${id}&post_type=${type}`);
     return lastValueFrom($response);
   }
+
+  /**
+   * Get episodes
+   */
+  getEpisodes(idEpisode: number) {
+    const $response = this.http.get(this.baseUrl + `episodes?post_id=${idEpisode}`);
+    return lastValueFrom($response);
+  }
 }
