@@ -2,7 +2,7 @@
   <app-progress-bar></app-progress-bar>
   <nav class="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
     <a [routerLink]="'/'" class="flex items-center space-x-4">
-      <img [src]="'assets/img/logo.png'" alt="Series & Películas" class="h-16 w-auto" width="144" height="36"/>
+      <img [src]="'assets/img/logo.png'" alt="Series & Películas" class="h-16 w-auto" width="144" height="36" />
       <div class="flex flex-col">
         <span class="text-white text-xl font-bold uppercase tracking-wide">Películas & Series</span>
         <span class="text-gray-400 text-base font-light">By Hackstore2</span>
@@ -21,31 +21,49 @@
 
       <mat-menu #menu="matMenu">
         @for(theme of themeColorList; track $index) {
-          <div [class.hidden]="themeColorInit === theme.color" [attr.aria-label]="'Color ' + theme.name">
-            <button mat-menu-item (click)="setColorTheme(theme.color)">
-              <mat-icon
-                [style.color]="theme.color"
-                aria-hidden="false"
-                aria-label="Color Selector Icon"
-                fontIcon="lens"
-              ></mat-icon>
-              <span>{{ theme.name }}</span>
-            </button>
-          </div>
+        <div [class.hidden]="themeColorInit === theme.color" [attr.aria-label]="'Color ' + theme.name">
+          <button mat-menu-item (click)="setColorTheme(theme.color)">
+            <mat-icon [style.color]="theme.color" aria-hidden="false" aria-label="Color Selector Icon"
+              fontIcon="lens"></mat-icon>
+            <span>{{ theme.name }}</span>
+          </button>
+        </div>
         }
       </mat-menu>
     </div>
-
-    <button class="md:hidden text-white" (click)="toggleMenu()">
-      <mat-icon class="text-white">menu</mat-icon>
+    <button class="md:hidden text-white" (click)="toggleMenu()" aria-label="Abrir menú">
+      <mat-icon>menu</mat-icon>
     </button>
-
-    @if (isMenuOpen) {
-      <div class="absolute top-16 left-0 w-full bg-gray-900 flex flex-col">
-        <app-nav-links link="/" label="Inicio"></app-nav-links>
-        <app-nav-links link="/movies" label="Películas"></app-nav-links>
-        <app-nav-links link="/tvshows" label="Series"></app-nav-links>
-      </div>
-    }
   </nav>
+
+  <div class="md:hidden fixed top-0 left-0 h-full w-80 bg-gray-900 shadow-lg transform transition-transform duration-300 ease-in-out z-50"
+    [class.translate-x-0]="isMenuOpen" [class.-translate-x-full]="!isMenuOpen">
+    <div class="flex justify-end p-4">
+      <button (click)="toggleMenu()" class="text-white">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="flex flex-col space-y-4 px-6">
+      <app-nav-links link="/" label="Inicio" (click)="toggleMenu()"></app-nav-links>
+      <app-nav-links link="/movies" label="Películas" (click)="toggleMenu()"></app-nav-links>
+      <app-nav-links link="/tvshows" label="Series" (click)="toggleMenu()"></app-nav-links>
+
+      <div class="border-t border-gray-700 pt-4 mt-4">
+        <div class="text-white font-semibold text-sm mb-2 flex items-center space-x-2">
+          <mat-icon class="text-white">palette</mat-icon>
+          <span>Cambiar tema</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          @for(theme of themeColorList; track $index) {
+          <button class="flex items-center space-x-2 text-white text-sm py-1 px-2 rounded hover:bg-gray-800 transition"
+            [disabled]="themeColorInit === theme.color" (click)="setColorTheme(theme.color); toggleMenu()">
+            <mat-icon [style.color]="theme.color" fontIcon="lens" aria-hidden="true"></mat-icon>
+            <span>{{ theme.name }}</span>
+          </button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
