@@ -1,8 +1,8 @@
 <header class="fixed top-0 left-0 w-full z-50 shadow-md bg-gray-900">
   <app-progress-bar></app-progress-bar>
   <nav class="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
-    <a [routerLink]="'/'" class="flex items-center space-x-4">
-      <img [src]="'assets/img/logo.png'" alt="Series & Películas" class="h-16 w-auto" width="144" height="36"/>
+    <a class="flex items-center space-x-4">
+      <img [src]="'assets/img/logo.png'" alt="Series & Películas" class="h-16 w-auto" width="144" height="36" />
       <div class="flex flex-col">
         <span class="text-white text-xl font-bold uppercase tracking-wide">Películas & Series</span>
         <span class="text-gray-400 text-base font-light">By Hackstore2</span>
@@ -10,33 +10,52 @@
     </a>
 
     <div class="items-center space-x-8 hidden md:flex">
-      <a mat-button [routerLink]="'/'" [routerLinkActive]="['activated-route']" [routerLinkActiveOptions]="{exact: true}" aria-label="Inicio">Inicio </a>
-      <a mat-button [routerLink]="'/movies'" [routerLinkActive]="['activated-route']" aria-label="Películas">Películas</a>
-      <a mat-button [routerLink]="'/tvshows'" [routerLinkActive]="['activated-route']" aria-label="Series">Series</a>
-      
-      <button mat-icon-button [matMenuTriggerFor]="menu" title="Change Theme" aria-label="Change Theme" class="text-white hover:text-yellow-300 p-2 rounded transition-all duration-200">
-        <mat-icon>palette</mat-icon>
+<!--       <a [routerLink]="'/'" [routerLinkActive]="'border-b-2 border-white rounded-none'" [routerLinkActiveOptions]="{exact: true}"
+        class="text-white transition duration-100 border-b-2 border-transparent rounded-none hover:border-white"
+        aria-label="Inicio">Inicio</a>
+
+      <a [routerLink]="'/movies'" [routerLinkActive]="'border-b-2 border-white rounded-none'"
+        class="text-white transition duration-100 border-b-2 border-transparent rounded-none hover:border-white"
+        aria-label="Películas">Películas</a>
+
+      <a [routerLink]="'/tvshows'" [routerLinkActive]="'border-b-2 border-white rounded-none'"
+        class="text-white transition duration-100 border-b-2 border-transparent rounded-none hover:border-white"
+        aria-label="Series">Series</a> -->
+      <app-nav-links link="/" label="Inicio"></app-nav-links>
+      <app-nav-links link="/movies" label="Películas"></app-nav-links>
+      <app-nav-links link="/tvshows" label="Series"></app-nav-links>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" title="Change Theme" aria-label="Change Theme"
+        class="text-white hover:text-yellow-300 p-2 rounded transition-all duration-200">
+        <mat-icon class="text-white">palette</mat-icon>
       </button>
+
       <mat-menu #menu="matMenu">
         @for(theme of themeColorList; track $index) {
-        <div [class.hidden]="themeColorInit === theme.color" [attr.aria-label]="'Color ' + theme.name">
-          <button mat-menu-item (click)="setColorTheme(theme.color)">
-            <mat-icon [style.color]="theme.color" aria-hidden="false" aria-label="Color Selector Icon" fontIcon="lens"></mat-icon>
-            <span>{{theme.name}}</span>
-          </button>
-        </div>
+          <div [class.hidden]="themeColorInit === theme.color" [attr.aria-label]="'Color ' + theme.name">
+            <button mat-menu-item (click)="setColorTheme(theme.color)">
+              <mat-icon
+                [style.color]="theme.color"
+                aria-hidden="false"
+                aria-label="Color Selector Icon"
+                fontIcon="lens"
+              ></mat-icon>
+              <span>{{ theme.name }}</span>
+            </button>
+          </div>
         }
       </mat-menu>
     </div>
 
     <button class="md:hidden text-white" (click)="toggleMenu()">
-      <mat-icon>menu</mat-icon>
+      <mat-icon class="text-white">menu</mat-icon>
     </button>
-    @if(isMenuOpen) {
-      <div class="absolute top-16 left-0 w-full bg-gray-900">
-        <a mat-button [routerLink]="'/'" [routerLinkActive]="['activated-route']" [routerLinkActiveOptions]="{exact: true}" aria-label="Inicio" class="block w-full text-left">Inicio </a>
-        <a mat-button [routerLink]="'/movies'" [routerLinkActive]="['activated-route']" aria-label="Películas" class="block w-full text-left">Películas</a>
-        <a mat-button [routerLink]="'/tvshows'" [routerLinkActive]="['activated-route']" aria-label="Series" class="block w-full text-left">Series</a>
+
+    @if (isMenuOpen) {
+      <div class="absolute top-16 left-0 w-full bg-gray-900 flex flex-col">
+        <app-nav-links link="/" label="Inicio"></app-nav-links>
+        <app-nav-links link="/movies" label="Películas"></app-nav-links>
+        <app-nav-links link="/tvshows" label="Series"></app-nav-links>
       </div>
     }
   </nav>

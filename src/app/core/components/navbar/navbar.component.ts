@@ -1,24 +1,24 @@
 import { Component, computed, EventEmitter, inject, Output } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MatAnchor, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 import { themeColors } from '../../constants/theme-colors';
 import { Color } from '../../enums/colors.enum';
 import { MatIconModule } from '@angular/material/icon';
 import { ProgressBarService } from '../../../shared/service/progress-bar.service';
 import { ProgressBarComponent } from '../../../shared/components/progress-bar/progress-bar.component';
+import { NavLinksComponent } from "../../../shared/components/nav-links/nav-links.component";
 
 @Component({
   selector: 'app-navbar',
   imports: [
     MatMenuModule,
-    RouterLinkActive,
     MatIconModule,
-    MatAnchor,
-    MatIconButton,
     RouterLink,
-    ProgressBarComponent
-  ],
+    MatIconButton,
+    ProgressBarComponent,
+    NavLinksComponent
+],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
