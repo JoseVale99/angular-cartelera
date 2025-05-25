@@ -1,9 +1,10 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, signal, ViewChild } from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import { PosterCardComponent } from '../../shared/components/poster-card/poster-card.component';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
@@ -26,9 +27,10 @@ import { MediaService } from './services/media.service';
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'
 })
-export class ContentMainComponent {
+export class ContentMainComponent implements OnDestroy{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private mediaService = inject(MediaService);
+  private destroy$ = new Subject<void>();
   private matPaginatorIntl = inject(MatPaginatorIntl);
   private router = inject(Router);
   private fb = inject(FormBuilder);
@@ -53,8 +55,8 @@ export class ContentMainComponent {
   ngOnInit(): void {
     this.setConfigPaginator();
     this.getGeneres();
-   this.setHttpParams();
-   this.getMedia();
+    this.setHttpParams();
+    this.getMedia();
   }
 
   crearFormulario() {
@@ -62,7 +64,7 @@ export class ContentMainComponent {
       searchType: ['all']
     });
 
-    this.searchForm.get('searchType')?.valueChanges.subscribe(type => {
+    this.searchForm.get('searchType')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(type => {
       if (type === 'all') {
         this.searchForm.removeControl('searchQuery');
         this.selectedGenres = [];
@@ -170,5 +172,10 @@ export class ContentMainComponent {
     if (this.paginator) {
       this.paginator.pageIndex = index;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
