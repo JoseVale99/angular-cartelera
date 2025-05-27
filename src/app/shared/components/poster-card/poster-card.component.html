@@ -1,10 +1,10 @@
 @defer (on immediate) {
   <div class="flex flex-col mt-8 items-start bg-white shadow-lg rounded-2xl overflow-hidden transform transition-transform hover:scale-105 group">
-    <div class="relative w-full h-full cursor-pointer" [routerLink]="linkPath()">
+    <div class="relative w-full h-[300px] cursor-pointer" [routerLink]="linkPath()">
       <app-circular-progress [rating]="model()?.rating"></app-circular-progress>
-
-      <img class="w-full h-full object-cover rounded-t select-none transition-transform duration-400 min-h-[135px] group-hover:scale-110"
-      [src]="displayedImageUrl()" (error)="onImageError()" [alt]="model()?.title || model()?.name">
+      <app-image-fallback [uuid]="model()?.images?.poster" [alt]="model()?.title || model()?.name"
+      class="w-full h-full object-cover rounded-t select-none transition-transform duration-400 min-h-[135px] group-hover:scale-110">
+    </app-image-fallback>
       <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none">
         <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
           <span class="material-icons text-white text-2xl select-none">
