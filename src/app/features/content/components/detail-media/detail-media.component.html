@@ -51,6 +51,9 @@
                 @if(dataDetail.type === "movies"){
                     <app-video-player [idPost]="dataDetail._id" [title]="dataDetail.title"></app-video-player>
                 }@else if (dataDetail.type === "tvshows") {
+                    @if(showMedia()){
+                        <app-video-player [idPost]="episode()?._id!" [title]="episode()?.title!"></app-video-player>
+                    }
                     <mat-form-field appearance="fill" class="w-full md:w-60 mb-6">
                         <mat-label>Seleccionar temporada</mat-label>
                         <mat-select  [value]="selectedSeason()"  (selectionChange)="selectedSeason.set($event.value)">

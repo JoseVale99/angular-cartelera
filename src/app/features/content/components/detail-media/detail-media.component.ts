@@ -7,7 +7,7 @@ import { SwiperOptions } from 'swiper/types';
 import { DetailMedia } from '../../interfaces/detail.interface';
 import { RelatedMedia } from '../../interfaces/related.interface';
 import { MediaService } from '../../services/media.service';
-import { Episode } from '../../interfaces/episodes.interface';
+import { Episode, EpisodeWithSerie } from '../../interfaces/episodes.interface';
 import { VideoPlayerComponent } from "../video-player/video-player.component";
 import { ImageFallbackComponent } from '../../../../shared/components/image-fallback/image-fallback.component';
 import { MatSelectModule } from '@angular/material/select';
@@ -41,7 +41,9 @@ export class DetailMediaComponent {
   public imageGallery: string[] = [];
   public selectedOption!: string;
   public relatedMovies: RelatedMedia[] = [];
-  public  episodes = signal<Episode[]>([]);
+  public episodes = signal<Episode[]>([]);
+  public episode = signal<Episode | null>(null);
+  public showMedia = signal(false); 
   seasons: number[] = [];
   selectedSeason = signal<number | null>(null);
   public  filteredEpisodes = computed(() => {
@@ -54,7 +56,7 @@ export class DetailMediaComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const slug = params.get('slug')!;
-      this.getMovieBySlugDetail(slug);
+      this.getDataMediaBySlugDetail(slug);
     });
   }
 
@@ -66,22 +68,30 @@ export class DetailMediaComponent {
     }
   };
 
-  private async getMovieBySlugDetail(slug: string) {
-    this.isLoading.set(true);
+  private async getDataMediaBySlugDetail(slug: string) {
     try {
-      const data = await this.mediaService.getMediaBySlug(slug, this.type()!) as { data: DetailMedia };
+      const data = await this.getMediaBySlugDetail(slug, this.type()!) as { data: DetailMedia };
       this.dataDetail = data.data;
       this.imageGallery = this.dataDetail.gallery.split('\n').map(url => url.trim()).filter(
         trimmedUrl => trimmedUrl).map(trimmedUrl => this.urlGallery + trimmedUrl
         );
-      this.isLoading.set(false);
-      if(data?.data?.type ==="tvshows"){
+      if (data?.data?.type === "tvshows") {
         this.getEpisodes(this.dataDetail._id)
       }
       this.getRelatedMovie(this.dataDetail._id);
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  private async getMediaBySlugDetail(slug: string, type: string) {
+    try {
+      const data = await this.mediaService.getMediaBySlug(slug, type);
       this.isLoading.set(false);
+      return data;
+    } catch (error) {
+      this.isLoading.set(false);
+      throw error;
     }
   }
 
@@ -101,9 +111,15 @@ export class DetailMediaComponent {
   }
   
 
-  playEpisode(episode: any) {
-    console.log("Reproduciendo:", episode.title);
-    // Aquí puedes redirigir o abrir el reproductor
+  async playEpisode(episode: any) {
+    try {
+      const data = await this.getMediaBySlugDetail( episode.slug,'episodes') as { data: EpisodeWithSerie;};
+      this.dataDetail = data.data.serie;
+      this.episode.set(data.data.episode);
+      this.showMedia.set(true);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   private async getRelatedMovie(id: number) {
