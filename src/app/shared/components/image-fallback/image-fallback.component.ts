@@ -5,39 +5,42 @@ import { environment } from '../../../../environments/environment';
   selector: 'app-image-fallback',
   standalone: true,
   template: `
-  @if(!shouldHideImage()){
-      <img [src]="currentSrc()" [alt]="alt()" [class]="imgClass()" (error)="handleError()" />
+  @if (!shouldHideImage()) {
+    @if (!hasError()) {
+      <img [src]="fullUrl()" [alt]="alt()" (error)="handleError()" />
+    } @else {
+      <div class="w-full h-full flex flex-col justify-center items-center bg-gradient-to-br from-gray-700 via-gray-900 to-black text-gray-400 rounded-xl select-none overflow-hidden">
+        <span class="material-icons text-6xl mb-3 text-gray-500 select-none">
+          image_not_supported
+        </span>
+        <span class="text-sm font-semibold truncate max-w-[90%] text-center">
+          {{ alt() }}
+        </span>
+      </div>
     }
-  `
+  }
+  `,
 })
 export class ImageFallbackComponent {
   uuid = input.required<string>();
   type = input('');
-  fallback = input('/assets/img/fallback.webp');
   alt = input('Imagen');
-  imgClass = input('object-cover w-full h-auto rounded-xl');
   hideOnError = input(false);
-  private currentErrorUrl = signal<string | null>(null);
-
   private baseUrlDefault = environment.urlBase + 'wp-content/uploads';
   private baseUrlEpisodes = 'https://image.tmdb.org/t/p/w780';
 
-  private fullUrl = computed(() => {
+  private currentErrorUrl = signal<string | null>(null);
+
+  fullUrl = computed(() => {
     const trimmedUuid = this.uuid()?.trim();
-    if (!trimmedUuid) return this.fallback();
+    if (!trimmedUuid) return '';
     return this.type() === 'episodes' ?
-    `${this.baseUrlEpisodes}${trimmedUuid}`: `${this.baseUrlDefault}${trimmedUuid}`;
+      `${this.baseUrlEpisodes}${trimmedUuid}` : `${this.baseUrlDefault}${trimmedUuid}`;
   });
 
-  currentSrc = computed(() => {
-    const url = this.fullUrl();
-    return this.currentErrorUrl() === url ? this.fallback() : url;
-  });
+  hasError = computed(() => this.currentErrorUrl() === this.fullUrl());
 
-  shouldHideImage = computed(() => {
-    const url = this.fullUrl();
-    return this.hideOnError() && this.currentErrorUrl() === url;
-  });
+  shouldHideImage = computed(() => this.hideOnError() && this.hasError());
 
   handleError() {
     this.currentErrorUrl.set(this.fullUrl());
