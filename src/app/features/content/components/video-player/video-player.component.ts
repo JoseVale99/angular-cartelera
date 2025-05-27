@@ -46,7 +46,7 @@ export class VideoPlayerComponent {
       this.videoUrl = this.sanitizeUrl(this.opciones[0].url);
       this.selectedOption = this.opciones[0].url;
       this.isLoading.set(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       this.isLoading.set(false);
     }

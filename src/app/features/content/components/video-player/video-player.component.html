@@ -29,20 +29,21 @@
     }
 
     @if(showOptions) {
-    <div @slideInOut class="absolute top-0 left-0 w-full h-full bg-[#111827]/95 text-white z-20 overflow-y-auto p-4 rounded-xl space-y-4">
-        <div class="flex justify-between items-center mb-4">
-            <h5 class="text-sm font-semibold">Opciones de reproducción</h5>
-            <button (click)="toggleOptions()" class="text-gray-300 hover:text-white">&times;</button>
+        <div @slideInOut
+            class="absolute top-0 left-0 w-full max-h-[500px] h-full bg-[#111827]/95 text-white z-20 overflow-y-auto p-4 rounded-xl space-y-4">
+            <div class="flex justify-between items-center mb-4">
+                <h5 class="text-sm font-semibold">Opciones de reproducción</h5>
+                <button (click)="toggleOptions()" class="text-gray-300 hover:text-white">&times;</button>
+            </div>
+            @for (opcion of opciones; track opcion) {
+                <div class="bg-[#1f2937] border border-blue-600 rounded-lg p-3 cursor-pointer hover:bg-blue-800"
+                    (click)="changeVideoPlayer(opcion.url)"
+                    [class]="selectedOption === opcion.url ? 'bg-blue-800' : ''">
+                    <p class="text-sm font-bold mb-1">{{ title() }}</p>
+                    <span class="text-xs bg-gray-800 text-white px-2 py-1 rounded mr-2">{{ opcion.lang || 'N/A' }}</span>
+                    <span class="text-xs bg-blue-700 text-white px-2 py-1 rounded">{{ opcion.quality || 'N/A' }}</span> 
+                </div>
+            }
         </div>
-        @for (opcion of opciones; track opcion) {
-        <div class="bg-[#1f2937] border border-blue-600 rounded-lg p-3 cursor-pointer hover:bg-blue-800"
-            (click)="changeVideoPlayer(opcion.url)" [class]="selectedOption === opcion.url ? 'bg-blue-800' : ''">
-            <p class="text-sm font-bold mb-1">{{ title() }}</p>
-            <span class="text-xs bg-gray-800 text-white px-2 py-1 rounded mr-2">{{ opcion.lang || 'N/A' }}</span>
-            <span class="text-xs bg-blue-700 text-white px-2 py-1 rounded">{{ opcion.quality || 'N/A' }}</span> 
-        </div>
-        }
-
-    </div>
     }
 </div>
