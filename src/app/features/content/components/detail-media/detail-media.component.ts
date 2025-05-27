@@ -112,6 +112,7 @@ export class DetailMediaComponent {
   
 
   async playEpisode(episode: any) {
+    this.showMedia.set(false);
     try {
       const data = await this.getMediaBySlugDetail( episode.slug,'episodes') as { data: EpisodeWithSerie;};
       this.dataDetail = data.data.serie;
